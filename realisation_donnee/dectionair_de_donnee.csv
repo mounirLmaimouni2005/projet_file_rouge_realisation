@@ -1,0 +1,20 @@
+Nom,Meaning,Format,Obligatoire,Calcul
+nom_complet,Nom complet de l’utilisateur,"string, 2–100 caractères",Oui,Non
+email,Adresse e-mail de l’utilisateur,"string, format e-mail valide",Oui,Non
+mot_de_passe,Mot de passe du compte,"string, minimum 8 caractères",Oui,Non
+role,Rôle de l’utilisateur,"enum: admin, seller, buyer",Oui,Non
+telephone,Numéro de téléphone marocain du vendeur,"string, format téléphone marocain",Oui,Non
+titre,Titre de l’annonce,"string, 5–150 caractères",Oui,Non
+description,Description détaillée de l’article,"text, 10–5000 caractères",Oui,Non
+prix,Prix demandé pour l’article,"positive float, en MAD",Oui,Non
+etat,État physique de l’article,"enum: like_new, good, fair, needs_repair",Oui,Non
+statut,Disponibilité de l’article,"enum: available, sold",Oui,Non
+photo,Photo de l’article,"string, chemin/nom de fichier image",Oui,Non
+categorie,Catégorie de l’article,enum: 13 catégories fixes,Oui,Non
+ville,Ville marocaine où se trouve l’article,string, nom de ville,Oui
+date_publication,Date et heure de publication de l’annonce,datetime,Oui,Non
+date_modification,Date et heure de la dernière modification de l’annonce,datetime,Non,Non
+date_creation_compte,Date et heure de création du compte,datetime,Oui,Non
+date_vente,Date et heure du passage au statut vendu,datetime,Non,Non
+message_whatsapp,Message pré-rempli envoyé au vendeur via WhatsApp,string,Non,non
+lien_whatsapp,Lien permettant d’ouvrir la conversation WhatsApp,"string, URL wa.me",Non,non

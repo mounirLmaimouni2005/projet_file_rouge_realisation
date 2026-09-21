@@ -1,0 +1,184 @@
+//role and context promt ://
+
+[ROLE]
+You are a Senior Full-Stack PHP & UI/UX Developer. Your task is to write clean, modular, production-ready code step-by-step for "TechSwap Morocco". Do NOT write the entire application at once. Wait for instructions.
+
+[CONTEXT & BUSINESS MODEL]
+- Platform Name: TechSwap Morocco
+- Core Nature: Second-hand electronics and appliances classifieds marketplace. STRICTLY USED / SECOND-HAND ITEMS ONLY (no brand-new items allowed in listings).
+- Transaction Model: NO online payment, NO shopping cart, NO checkout. Pure classifieds discovery followed by direct buyer-to-seller communication via WhatsApp.
+- Geographic Scope: Morocco (cities filtering like Casablanca, Rabat, Marrakech, etc.).
+- Tech Stack: PHP (PDO for MySQL/MariaDB), Pure CSS (external style.css), clean modular file structure.
+[USER ROLES & PERMISSIONS]
+1. Admin:
+   - Full platform moderation (delete or edit any listing).
+   - View and manage users and platform overview.
+2. Seller:
+   - Account registration and login.
+   - Create, edit, and delete own product listings.
+   - Toggle product status between 'available' and 'sold'.
+3. Buyer / Guest:
+   - Browse the public catalog.
+   - Filter items by category, city, and price range.
+   - View full product detail page.
+   - Click a direct WhatsApp button to contact the seller.
+[BUYER PURCHASE / CONTACT WORKFLOW]
+1. Buyer opens product detail page (`product-detail.php?id=X`).
+2. Page displays second-hand item info: title, price in MAD, physical condition status ('like_new', 'good', 'fair', 'needs_repair'), city, description, and photo.
+3. Buyer clicks "Chat on WhatsApp" button, which generates a pre-filled WhatsApp link:
+[13 FIXED CATEGORIES]
+1. Smartphones & Tablets (used)
+2. Computers & IT (used laptops/desktops/parts)
+3. Household Appliances - Domestique (gros/petit - used)
+4. TV & Audio (used)
+5. Pro & Commercial Gear - HoReCa/POS/Vitrines (used)
+6. Gaming & Consoles (used)
+7. Cameras & Creator Gear (used)
+8. Green Energy & Smart Home (used solar/powerstations)
+9. Networking & Telecom (used switches/routers)
+10. DIY, Repair & Lab Tools (used)
+11. Pro Audio & Live Events (used)
+12. Edge Computing & Mini-Data/NAS (used)
+13. Micro-Mobility Tech - Trottinettes/E-bikes (used)
+
+[DATABASE REQUIREMENTS OVERVIEW]
+- Table `users`: id, name, email, phone, password_hash, city, role ('admin', 'seller'), created_at
+- Table `products`: id, seller_id, title, category, brand, condition_status ('like_new', 'good', 'fair', 'needs_repair'), price, description, image_url, status ('available', 'sold'), created_at
+
+[INSTRUCTION FOR NOW]
+Acknowledge that you understand this complete used-only spec, the 3 roles, the 13 categories, and the WhatsApp flow. Do NOT generate code yet. Confirm readiness and wait for Step 1.
+
+
+
+
+
+
+
+//dectionaire promt //
+Act as a database architect following strict MERISE methodology.
+Based on the approved scope of TechSwap Morocco (3 roles, strictly used items across 13 categories, Moroccan city filtering, direct WhatsApp contact with pre-filled MAD price, no checkout/cart):
+
+Task: Generate ONLY the **Dictionnaire de Données** capturing all necessary attributes/properties for this domain.
+
+Use exact columns:
+1. **Nom** (Attribute name)
+2. **Meaning** (Signification)
+3. **Format** (Data type / constraint pattern, e.g., string, positive float, enum list)
+4. **Obligatoire** (Oui / Non)
+5. **Calcul** (Non / formula if derived)
+
+Rules:
+- Do NOT define entities or tables.
+- Do NOT define foreign/primary keys yet.
+- Do NOT write SQL or PHP.
+- We will do Dépendances Fonctionnelles (DF) in the next step. Output the Data Dictionary now.
+
+
+
+
+
+//dependance //
+Based on the previous Functional Dependencies and the proven limitation of natural composite keys for listings, act as a database architect.
+Task: Transition to **MLD (Modèle Logique de Données)**.
+1. Introduce technical primary keys (`id_utilisateur`, `id_produit`) and foreign key (`id_vendeur`).
+2. Define the relational schema (Tables, Fields, Primary/Foreign keys, and constraints like NOT NULL / UNIQUE / ENUM).
+3. Do NOT write SQL code yet, just give the clean structural MLD representation.
+
+
+
+
+
+//cardinalites//
+Act as a database architect.
+Context: We have 2 entities for TechSwap Morocco: `utilisateurs` and `annonces`.
+Task: Write the relationship and cardinalities strictly using compact ASCII flow notation like this example:
+`table_a (min,max) ---- (VERB) ----> (min,max) table_b`
+
+Rules:
+- Give the exact line representing the relationship between `utilisateurs` and `annonces`.
+- Keep it ultra-short and text-based.
+- No heavy prose, just the cardinal line and a 1-line text explanation.
+
+
+// dectionaire && deppandance format csv //
+Act as a strict data formatting assistant following strict fidelity to our previous conversation.
+Context: We have designed "TechSwap Morocco" with 4 MERISE entities (`utilisateurs`, `annonces`, `categories`, `villes`).
+
+Task: Take our established:
+1) Dictionnaire de Données (compact)
+2) Dépendances Fonctionnelles (compact)
+3) Cardinalités (4 tables)
+
+And output them formatted cleanly as **CSV text blocks** (using comma `,` separation or semicolon `;`). 
+
+Rules:
+- DO NOT invent, add, delete, or modify any attribute, type, constraint, or cardinal relationship.
+- Keep exact faithful content from our discussion.
+- Output each section in a clean ```csv ... ``` code block.
+
+
+
+// create database //
+Act as a Senior Database Architect and MERISE-to-SQL Specialist.
+Context:
+Project: "TechSwap Morocco" (second-hand electronics & appliances classifieds marketplace).
+Business Rules: 
+- 3 roles: admin, seller, buyer.
+- 13 fixed categories.
+- Moroccan cities.
+- Direct WhatsApp contact with pre-filled MAD price, zero cart/checkout.
+
+MERISE Model & Cardinalities:
+- Entities: UTILISATEUR, ANNONCE, CATEGORIE, VILLE
+- Cardinalities:
+  * UTILISATEUR (0,N) ---- PUBLIER ----> (1,1) ANNONCE
+  * ANNONCE (1,1) ---- APPARTENIR ----> (0,N) CATEGORIE
+  * ANNONCE (1,1) ---- SE_TROUVER_DANS ----> (0,N) VILLE
+
+Task:
+1. Design the technical relational schema (choose appropriate surrogate primary keys, foreign keys, data types, lengths, and constraints like NOT NULL, UNIQUE, ENUM, DEFAULT).
+2. Generate production-ready MySQL DDL script (`CREATE TABLE`) with `ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci`.
+3. Add appropriate indexes for foreign keys and filter columns (`statut`, `prix`).
+4. Provide basic seed `INSERT` statements for the 13 fixed categories and major Moroccan cities.
+
+Output ONLY clean raw SQL inside a ```sql ... ``` code block with brief inline comments. No extra conversational fluff.
+
+
+
+
+
+// connection with database //
+Act as a PHP developer. Write a simple, clean procedural PDO database connection script.
+
+Requirements:
+- Variables for host (`localhost`), dbname (`techswap`), username (`root`), password (`""`), charset (`utf8mb4`).
+- Return a `$pdo` variable with proper error mode (`PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION`) and default fetch mode (`PDO::FETCH_ASSOC`).
+- Add a 2-line usage test with try/catch.
+
+Output ONLY the PHP code inside ```php ... ```.
+
+
+
+
+
+
+
+
+// crud //
+
+
+Context: Project "TechSwap Morocco". We have a working PDO connection in `db.php`.
+Table structure `annonces`: `id_produit` (PK, AUTO_INCREMENT), `id_vendeur`, `id_categorie`, `id_ville`, `titre`, `description`, `prix`, `etat` ('like_new','good','fair','needs_repair'), `statut` ('available','sold'), `photo`, `date_publication`.
+No auth/login for now: for inserts/foreign keys, use default hardcoded values (`id_vendeur = 1`, `id_categorie = 1`, `id_ville = 1`).
+
+Task: Write complete, secure (using PDO prepared statements), clean procedural PHP CRUD files using Bootstrap 5 for UI styling:
+
+1. `list_annonces.php`: Table showing `id_produit`, `titre`, `prix`, `etat`, `statut`, `date_publication` with Action column (Edit, Delete links/buttons), and an "Ajouter une annonce" top button. Include `require_once 'db.php';`.
+2. `add_annonce.php`: HTML form (POST) to add an ad (`titre`, `description`, `prix`, `etat`, `photo`) + PHP insertion logic redirecting to `list_annonces.php`.
+3. `edit_annonce.php`: HTML form (GET/POST) pre-filled with existing ad data fetched by `id_produit` + PHP update logic redirecting to `list_annonces.php`.
+4. `delete_annonce.php`: Logic receiving `id_produit` via GET/POST, deleting the record safely with prepared statement, and redirecting to `list_annonces.php`.
+
+Output format:
+Provide code file-by-file inside ```php ... ``` blocks with clear file name headers. Minimal fluff.
+
+
