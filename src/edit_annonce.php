@@ -55,7 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             
             $dest_path = $uploadFileDir . $newFileName;
             if (move_uploaded_file($fileTmpPath, $dest_path)) {
-                // حذف الصورة القديمة إذا كانت موجودة ومرتبطة بـ uploads
+                
                 if (!empty($annonce['photo']) && file_exists($annonce['photo'])) {
                     @unlink($annonce['photo']);
                 }

@@ -157,25 +157,5 @@ ANNONCE (1,1) ---- SE_TROUVER_DANS ----&gt; (0,N) VILLE
 # MCD — Vue synthétique
 
 ```text
-┌───────────────┐
-│ UTILISATEUR   │
-└───────┬───────┘
-        │ (0,N)
-     PUBLIER
-        │ (1,1)
-        ▼
-┌───────────────┐
-│   ANNONCE     │
-└───┬───────┬───┘
-    │       │
- (1,1)    (1,1)
-    │       │
-    ▼       ▼
-APPARTENIR  SE_TROUVER_DANS
-    │       │
- (0,N)     (0,N)
-    │       │
-    ▼       ▼
-┌────────┐ ┌────────┐
-│CATEGORIE│ │ VILLE │
-└────────┘ └────────┘
+
+c:\Users\Solicode\Downloads\Gemini_Generated_Image_ui63sxui63sxui63.jpg

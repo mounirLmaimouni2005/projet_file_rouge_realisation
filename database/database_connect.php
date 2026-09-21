@@ -3,7 +3,7 @@
 $host = "localhost";
 $dbname = "techswap_morocco";
 $username = "root";
-$password = "";
+$password = "13737115";
 $charset = "utf8mb4";
 
 $dsn = "mysql:host=$host;dbname=$dbname;charset=$charset";

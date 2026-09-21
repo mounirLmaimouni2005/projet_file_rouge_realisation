@@ -72,7 +72,7 @@ $annonces = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 </h3>
                 <p class="mb-0 small text-white-50">TechSwap Morocco</p>
             </div>
-            <a href="add_annonce.php" class="btn btn-light rounded-pill px-4 fw-semibold">
+            <a href="add_anance.php" class="btn btn-light rounded-pill px-4 fw-semibold">
                 <i class="fa-solid fa-plus me-1"></i> Ajouter une annonce
             </a>
         </div>

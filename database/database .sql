@@ -156,3 +156,5 @@ INSERT INTO villes (ville) VALUES
 
 
 SHOW TABLES;
+INSERT INTO utilisateurs (id_utilisateur, nom_complet, email, mot_de_passe, role, telephone) 
+VALUES (1, 'Test Seller Tech', 'seller@techswap.ma', '123456', 'seller', '+212600000000');
