@@ -1,0 +1,101 @@
+
+
+PROMT 1 : Analyze this entire project before making any changes.
+
+
+Your goal is to build a clear understanding of the existing codebase so you can work correctly on future tasks.
+
+Inspect:
+
+* Project structure and important files
+* Technologies and dependencies
+* Frontend/backend architecture
+* Data flow and API communication
+* Main classes, functions, and modules
+* Current features and functionality
+* Existing conventions and patterns
+* Important bugs, risks, or inconsistencies
+
+Rules:
+
+* DO NOT modify, create, delete, or refactor anything.
+* DO NOT write implementation code.
+* Use the actual project files as the source of truth.
+* Do not make assumptions; mention anything unclear.
+* Preserve the existing architecture and conventions in future tasks unless I explicitly ask otherwise.
+
+After analyzing, give me a concise summary of:
+
+1. Architecture
+2. Project structure
+3. Data/API flow
+4. Main functionality
+5. Important conventions
+6. Problems or risks
+7. Anything I should know before giving you future tasks
+
+This analysis will be your context for all future modifications to this project.
+ 
+
+
+
+
+
+
+
+PROMT 2 : E Prepare the Architecture
+
+For this phase, focus ONLY on the `annonces` CRUD.
+
+Goal:
+Implement the CRUD using:
+
+* PHP OOP
+* MySQL with PDO
+* JSON API
+* JavaScript `fetch()`
+
+Keep the architecture simple:
+
+```text
+backend/
+├── config/Database.php
+├── classes/Annonce.php
+└── api/annonces.php
+
+frontend/
+├── list.html
+├── add.html
+├── edit.html
+└── js/annonces.js
+```
+
+Keep `src/` untouched as the legacy version.
+
+Implement only:
+
+* GET all annonces
+* GET one annonce
+* POST annonce
+* PUT annonce
+* DELETE annonce
+
+API responses must be JSON.
+
+Use PDO prepared statements.
+
+Do not add authentication, middleware, services, JSON file storage, sync system, or extra architecture yet.
+
+Preserve the existing database structure and CRUD behavior.
+
+Start with the backend CRUD API only, then STOP and report what was created and tested.
+
+
+
+
+
+
+
+
+
+

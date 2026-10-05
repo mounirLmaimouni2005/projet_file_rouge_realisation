@@ -1,0 +1,9 @@
+# Deny PHP execution inside the uploads directory.
+# An attacker who uploads a disguised .php file cannot execute it.
+<FilesMatch "\.php$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# Disable directory listing
+Options -Indexes
