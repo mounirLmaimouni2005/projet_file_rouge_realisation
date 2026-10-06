@@ -1,149 +1,871 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" class="h-full bg-zinc-950">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TechSwap - Publier une annonce</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <title>TechSwap Maroc — Ajouter une annonce</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+                    },
+                    colors: {
+                        zinc: {
+                            750: '#202024',
+                            850: '#1c1c20',
+                            925: '#111114',
+                            950: '#09090b',
+                        },
+                        orange: {
+                            450: '#ff6b1a',
+                            500: '#f97316',
+                            600: '#ea580c',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
     <style>
         body {
-            background-color: #f8f9fa;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background-color: #09090b;
+            color: #f4f4f5;
         }
-        .modern-card {
-            border: none;
-            border-radius: 1rem;
-            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.08);
-            overflow: hidden;
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
         }
-        .card-header-custom {
-            background: linear-gradient(135deg, #0d6efd, #0dcaf0);
-            color: white;
-            padding: 1.5rem;
+        ::-webkit-scrollbar-track {
+            background: #18181b;
         }
-        .form-label {
-            font-weight: 600;
-            color: #343a40;
-            font-size: 0.9rem;
+        ::-webkit-scrollbar-thumb {
+            background: #3f3f46;
+            border-radius: 3px;
         }
-        .form-control, .form-select {
-            border-radius: 0.5rem;
-            padding: 0.65rem 0.90rem;
-            border-color: #dee2e6;
-        }
-        .form-control:focus, .form-select:focus {
-            box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.15);
-        }
-        .preview-img {
-            max-width: 150px;
-            max-height: 120px;
-            object-fit: cover;
-            border-radius: 8px;
-            border: 1px solid #dee2e6;
+        ::-webkit-scrollbar-thumb:hover {
+            background: #52525b;
         }
     </style>
 </head>
-<body>
+<body class="min-h-screen flex bg-zinc-950 text-zinc-100 antialiased selection:bg-orange-500/30 selection:text-orange-300">
 
-<div class="container py-5">
-    <div class="row justify-content-center">
-        <div class="col-lg-8">
-            <div id="alert-container"></div>
+    <!-- ════════════════════════════════════ SVG ICON SPRITE ═══════════════════════════════════ -->
+    <svg xmlns="http://www.w3.org/2000/svg" class="hidden">
+        <symbol id="icon-house" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+            <polyline points="9 22 9 12 15 12 15 22"/>
+        </symbol>
+        <symbol id="icon-tag" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2H2v10l9.29 9.29c.94.94 2.48.94 3.42 0l6.58-6.58c.94-.94.94-2.48 0-3.42L12 2Z"/>
+            <path d="M7 7h.01"/>
+        </symbol>
+        <symbol id="icon-layers" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="12 2 2 7 12 12 22 7 12 2"/>
+            <polyline points="2 17 12 22 22 17"/>
+            <polyline points="2 12 12 17 22 12"/>
+        </symbol>
+        <symbol id="icon-city" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="4" y="2" width="16" height="20" rx="2" ry="2"/>
+            <path d="M9 22v-4h6v4"/>
+            <path d="M8 6h.01"/>
+            <path d="M16 6h.01"/>
+            <path d="M8 10h.01"/>
+            <path d="M16 10h.01"/>
+            <path d="M8 14h.01"/>
+            <path d="M16 14h.01"/>
+        </symbol>
+        <symbol id="icon-user" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/>
+            <circle cx="12" cy="7" r="4"/>
+        </symbol>
+        <symbol id="icon-bell" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/>
+            <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/>
+        </symbol>
+        <symbol id="icon-bars" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="4" x2="20" y1="12" y2="12"/>
+            <line x1="4" x2="20" y1="6" y2="6"/>
+            <line x1="4" x2="20" y1="18" y2="18"/>
+        </symbol>
+        <symbol id="icon-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 6 6 18"/>
+            <path d="m6 6 12 12"/>
+        </symbol>
+        <symbol id="icon-arrow-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="19" x2="5" y1="12" y2="12"/>
+            <polyline points="12 19 5 12 12 5"/>
+        </symbol>
+        <symbol id="icon-upload-cloud" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242"/>
+            <path d="M12 12v9"/>
+            <path d="m16 16-4-4-4 4"/>
+        </symbol>
+        <symbol id="icon-trash" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 6h18"/>
+            <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/>
+            <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/>
+            <line x1="10" x2="10" y1="11" y2="17"/>
+            <line x1="14" x2="14" y1="11" y2="17"/>
+        </symbol>
+        <symbol id="icon-check-circle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+            <polyline points="22 4 12 14.01 9 11.01"/>
+        </symbol>
+        <symbol id="icon-sparkles" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/>
+        </symbol>
+        <symbol id="icon-chevron-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m9 18 6-6-6-6"/>
+        </symbol>
+    </svg>
 
-            <div class="card modern-card">
-                <div class="card-header-custom d-flex justify-content-between align-items-center">
-                    <div>
-                        <h3 class="mb-0 fw-bold"><i class="fa-solid fa-plus-circle me-2"></i>Publier une annonce</h3>
-                        <p class="mb-0 text-white-50 small">TechSwap Morocco - Espace Vendeur</p>
-                    </div>
-                    <a href="list.html" class="btn btn-light btn-sm rounded-pill px-3 fw-semibold">
-                        <i class="fa-solid fa-arrow-left me-1"></i>Retour
-                    </a>
+    <!-- ════════════════════════════════════ TOAST CONTAINER ═══════════════════════════════════ -->
+    <div id="toast-container" class="fixed top-5 right-5 z-50 flex flex-col gap-2 pointer-events-none" aria-live="polite"></div>
+
+    <!-- ════════════════════════════════════ SIDEBAR ═══════════════════════════════════ -->
+    <aside id="sidebar" class="fixed inset-y-0 left-0 z-40 w-64 bg-zinc-900 flex flex-col border-r border-zinc-800 transition-transform duration-200 ease-in-out -translate-x-full lg:translate-x-0 lg:static lg:inset-auto">
+
+        <!-- Brand / Header -->
+        <div class="h-16 flex items-center justify-between px-5 border-b border-zinc-800 flex-shrink-0">
+            <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-lg bg-orange-500 flex items-center justify-center text-zinc-950 font-black text-sm tracking-wider shadow-md shadow-orange-500/20 select-none">
+                    TS
                 </div>
-                
-                <div class="card-body p-4 p-md-5 bg-white">
-                    <form id="add-annonce-form">
-                        
-                        <div class="mb-3">
-                            <label for="titre" class="form-label">Titre de l'annonce *</label>
-                            <input type="text" name="titre" id="titre" class="form-control" placeholder="Ex: iPhone 14 Pro Max 256GB" minlength="5" maxlength="150" required>
-                            <div class="form-text">Entre 5 et 150 caractères.</div>
-                        </div>
+                <div class="leading-none">
+                    <span class="text-zinc-100 text-sm font-bold tracking-tight block">TechSwap</span>
+                    <span class="text-orange-400 text-[10px] font-semibold tracking-wider uppercase mt-0.5 block">Maroc Admin</span>
+                </div>
+            </div>
+            <button type="button" onclick="closeSidebar()" class="lg:hidden p-1.5 rounded-lg text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800 transition-colors" aria-label="Fermer le menu latéral">
+                <svg class="w-5 h-5"><use href="#icon-x"></use></svg>
+            </button>
+        </div>
 
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label for="id_categorie" class="form-label">Catégorie *</label>
-                                <select name="id_categorie" id="id_categorie" class="form-select" required>
-                                    <option value="">-- Chargement des catégories... --</option>
-                                </select>
-                            </div>
+        <!-- Navigation items -->
+        <nav class="flex-1 overflow-y-auto py-4 px-3 space-y-1">
+            <p class="px-3 pt-2 pb-1.5 text-[10px] font-semibold uppercase tracking-wider text-zinc-500">Navigation principale</p>
 
-                            <div class="col-md-6 mb-3">
-                                <label for="id_ville" class="form-label">Ville *</label>
-                                <select name="id_ville" id="id_ville" class="form-select" required>
-                                    <option value="">-- Chargement des villes... --</option>
-                                </select>
-                            </div>
-                        </div>
+            <a href="#" class="group flex items-center gap-3 px-3 py-2.5 rounded-lg text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800/70 transition-all text-xs font-medium">
+                <svg class="w-4 h-4 text-zinc-500 group-hover:text-zinc-300 transition-colors"><use href="#icon-house"></use></svg>
+                Tableau de bord
+            </a>
 
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label for="prix" class="form-label">Prix (MAD) *</label>
-                                <div class="input-group">
-                                    <input type="number" name="prix" id="prix" class="form-control" step="0.01" min="0" placeholder="0.00" required>
-                                    <span class="input-group-text">MAD</span>
-                                </div>
-                            </div>
+            <!-- Active link: Annonces -->
+            <a href="index.html" class="group flex items-center gap-3 px-3 py-2.5 rounded-lg text-orange-400 bg-orange-500/10 border border-orange-500/20 text-xs font-semibold shadow-sm">
+                <svg class="w-4 h-4 text-orange-400"><use href="#icon-tag"></use></svg>
+                <span>Annonces</span>
+                <span class="ml-auto inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-bold bg-orange-500/20 text-orange-300 border border-orange-500/30">Nouveau</span>
+            </a>
 
-                            <div class="col-md-6 mb-3">
-                                <label for="etat" class="form-label">État du produit *</label>
-                                <select name="etat" id="etat" class="form-select" required>
-                                    <option value="like_new">Comme neuf</option>
-                                    <option value="good" selected>Bon état</option>
-                                    <option value="fair">État moyen</option>
-                                    <option value="needs_repair">À réparer</option>
-                                </select>
-                            </div>
-                        </div>
+            <a href="#" class="group flex items-center gap-3 px-3 py-2.5 rounded-lg text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800/70 transition-all text-xs font-medium">
+                <svg class="w-4 h-4 text-zinc-500 group-hover:text-zinc-300 transition-colors"><use href="#icon-layers"></use></svg>
+                Catégories
+            </a>
 
-                        <div class="mb-3">
-                            <label for="description" class="form-label">Description détaillée *</label>
-                            <textarea name="description" id="description" class="form-control" rows="4" placeholder="Précisez les caractéristiques, l'état, les accessoires inclus..." minlength="10" required></textarea>
-                            <div class="form-text">Minimum 10 caractères.</div>
-                        </div>
+            <a href="#" class="group flex items-center gap-3 px-3 py-2.5 rounded-lg text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800/70 transition-all text-xs font-medium">
+                <svg class="w-4 h-4 text-zinc-500 group-hover:text-zinc-300 transition-colors"><use href="#icon-city"></use></svg>
+                Villes
+            </a>
 
-                        <div class="mb-4">
-                            <label for="photo" class="form-label">Photo du produit *</label>
-                            <input type="file" name="photo" id="photo" class="form-control" accept="image/jpeg,image/png,image/webp" required>
-                            <div class="form-text">Formats acceptés : JPG, PNG, WEBP (max 5 Mo).</div>
-                            <div class="mt-3">
-                                <img id="photo-preview" src="" alt="Aperçu de la photo" class="preview-img d-none">
-                            </div>
-                        </div>
+            <p class="px-3 pt-5 pb-1.5 text-[10px] font-semibold uppercase tracking-wider text-zinc-500">Administration</p>
 
-                        <div class="d-flex justify-content-between align-items-center pt-3 border-top">
-                            <a href="list.html" class="btn btn-outline-secondary rounded-pill px-4">
-                                <i class="fa-solid fa-arrow-left me-1"></i> Annuler
-                            </a>
-                            <button type="submit" id="submit-btn" class="btn btn-primary rounded-pill px-5 fw-semibold shadow-sm">
-                                <i class="fa-solid fa-check me-1"></i> Publier
-                            </button>
-                        </div>
+            <a href="#" class="group flex items-center gap-3 px-3 py-2.5 rounded-lg text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800/70 transition-all text-xs font-medium">
+                <svg class="w-4 h-4 text-zinc-500 group-hover:text-zinc-300 transition-colors"><use href="#icon-user"></use></svg>
+                Profil & Paramètres
+            </a>
+        </nav>
 
-                    </form>
+        <!-- Sidebar footer: User pill -->
+        <div class="p-3 border-t border-zinc-800 flex-shrink-0 bg-zinc-900/60">
+            <div class="flex items-center gap-3 p-2 rounded-lg bg-zinc-950/60 border border-zinc-800/80">
+                <div class="w-8 h-8 rounded-full bg-orange-500/20 border border-orange-500/30 flex items-center justify-center text-xs font-bold text-orange-400 flex-shrink-0">
+                    AD
+                </div>
+                <div class="min-w-0 flex-1">
+                    <p class="text-zinc-200 text-xs font-semibold truncate leading-tight">Admin TechSwap</p>
+                    <p class="text-zinc-500 text-[10px] truncate mt-0.5">admin@techswap.ma</p>
                 </div>
             </div>
         </div>
-    </div>
-</div>
+    </aside>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-<script src="js/annonces.js"></script>
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-        initAddPage();
-    });
-</script>
+    <!-- Mobile Drawer Overlay -->
+    <div id="sidebar-overlay" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-30 hidden lg:hidden transition-opacity duration-200" onclick="closeSidebar()"></div>
+
+    <!-- ════════════════════════════════════ MAIN CONTENT ═══════════════════════════════════════ -->
+    <div class="flex-1 flex flex-col min-w-0 bg-zinc-950">
+
+        <!-- ── Top Header Bar ── -->
+        <header class="h-16 bg-zinc-900/90 backdrop-blur border-b border-zinc-800 flex items-center justify-between px-4 sm:px-6 lg:px-8 gap-4 sticky top-0 z-20">
+            
+            <div class="flex items-center gap-3">
+                <button type="button" onclick="openSidebar()" class="lg:hidden w-9 h-9 flex items-center justify-center rounded-lg bg-zinc-800 text-zinc-300 hover:text-white hover:bg-zinc-700 transition-colors border border-zinc-700" aria-label="Ouvrir le menu">
+                    <svg class="w-5 h-5"><use href="#icon-bars"></use></svg>
+                </button>
+
+                <div class="hidden sm:flex items-center gap-2 text-xs text-zinc-400">
+                    <span class="w-2 h-2 rounded-full bg-orange-500 animate-pulse"></span>
+                    <span>Publication enregistrée en base de données et miroir JSON</span>
+                </div>
+            </div>
+
+            <div class="flex items-center gap-3">
+                <button type="button" class="relative w-9 h-9 flex items-center justify-center rounded-lg bg-zinc-800/80 text-zinc-300 hover:text-white hover:bg-zinc-800 border border-zinc-700/60 transition-colors" aria-label="Notifications" title="Notifications">
+                    <svg class="w-4 h-4"><use href="#icon-bell"></use></svg>
+                    <span class="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-orange-500 ring-2 ring-zinc-900"></span>
+                </button>
+
+                <div class="w-px h-5 bg-zinc-800"></div>
+
+                <div class="flex items-center gap-2.5 px-2.5 py-1.5 rounded-lg bg-zinc-800/50 border border-zinc-800 text-zinc-300">
+                    <div class="w-6 h-6 rounded-full bg-orange-500 flex items-center justify-center text-zinc-950 text-[10px] font-bold">
+                        A
+                    </div>
+                    <span class="text-xs font-medium text-zinc-200 hidden md:block">Modérateur</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- ── Main Area ── -->
+        <main class="flex-1 p-4 sm:p-6 lg:p-8 max-w-7xl w-full mx-auto space-y-6 pb-24">
+
+            <!-- ── Header Card ── -->
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                <div>
+                    <nav class="flex items-center gap-2 text-[11px] text-zinc-400 mb-1.5" aria-label="Fil d'Ariane">
+                        <a href="index.html" class="hover:text-zinc-200 transition-colors">Annonces</a>
+                        <svg class="w-3 h-3 text-zinc-600"><use href="#icon-chevron-right"></use></svg>
+                        <span class="text-orange-400 font-medium">Ajouter</span>
+                    </nav>
+                    <h1 class="text-2xl font-bold text-zinc-100 tracking-tight">Ajouter une annonce</h1>
+                    <p class="text-xs sm:text-sm text-zinc-400 mt-1">L'article sera automatiquement inséré dans MySQL et sauvegardé dans le stockage JSON.</p>
+                </div>
+
+                <a 
+                    href="index.html" 
+                    class="inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-zinc-900 hover:bg-zinc-800 text-zinc-300 hover:text-zinc-100 border border-zinc-800 hover:border-zinc-700 font-medium text-xs rounded-xl transition-all shadow-sm flex-shrink-0"
+                >
+                    <svg class="w-4 h-4 text-zinc-400"><use href="#icon-arrow-left"></use></svg>
+                    <span>Retour à la liste</span>
+                </a>
+            </div>
+
+            <!-- Global Error Banner -->
+            <div id="global-error" class="hidden p-4 rounded-xl bg-red-950/60 border border-red-800/60 text-red-300 text-xs flex items-center gap-3">
+                <div class="w-6 h-6 rounded-full bg-red-500/20 text-red-400 flex items-center justify-center flex-shrink-0 font-bold">!</div>
+                <div id="global-error-msg" class="flex-1"></div>
+            </div>
+
+            <!-- ── FORM CONTAINER ── -->
+            <form id="add-annonce-form" novalidate class="space-y-6">
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+                    <!-- ════════════ LEFT COLUMN (2/3) : Informations principales ════════════ -->
+                    <div class="lg:col-span-2 space-y-6">
+                        
+                        <div class="bg-zinc-900 border border-zinc-800 rounded-2xl p-5 sm:p-6 shadow-sm space-y-5">
+                            <div class="border-b border-zinc-800 pb-3">
+                                <h2 class="text-sm font-semibold text-zinc-100 flex items-center gap-2">
+                                    <span class="w-2 h-2 rounded-full bg-orange-500"></span>
+                                    <span>Informations du produit</span>
+                                </h2>
+                                <p class="text-xs text-zinc-400 mt-0.5">Détails techniques, désignation et tarification.</p>
+                            </div>
+
+                            <!-- Titre -->
+                            <div class="space-y-1.5" id="field-group-titre">
+                                <div class="flex items-center justify-between">
+                                    <label for="titre" class="text-xs font-semibold text-zinc-200">
+                                        Titre de l'annonce <span class="text-orange-400">*</span>
+                                    </label>
+                                    <span id="titre-counter" class="text-[11px] text-zinc-500 font-mono">0 / 80</span>
+                                </div>
+                                <input 
+                                    type="text" 
+                                    id="titre" 
+                                    name="titre" 
+                                    maxlength="80" 
+                                    placeholder="ex. MacBook Pro 14 M1 Pro 16 Go 512 Go SSD" 
+                                    class="w-full h-11 bg-zinc-950 border border-zinc-800 rounded-lg px-3.5 text-xs text-zinc-100 placeholder-zinc-500 focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-500/30 transition-all"
+                                    required
+                                >
+                                <p id="error-titre" class="hidden text-red-400 text-xs mt-1 flex items-center gap-1"></p>
+                            </div>
+
+                            <!-- Description -->
+                            <div class="space-y-1.5" id="field-group-description">
+                                <div class="flex items-center justify-between">
+                                    <label for="description" class="text-xs font-semibold text-zinc-200">
+                                        Description détaillée <span class="text-orange-400">*</span>
+                                    </label>
+                                    <span id="description-counter" class="text-[11px] text-zinc-500 font-mono">0 / 20 min</span>
+                                </div>
+                                <textarea 
+                                    id="description" 
+                                    name="description" 
+                                    rows="5" 
+                                    placeholder="Décrivez l'état de l'appareil, son autonomie, la présence d'accessoires, de la boîte d'origine ou de la facture..." 
+                                    class="w-full bg-zinc-950 border border-zinc-800 rounded-lg p-3.5 text-xs text-zinc-100 placeholder-zinc-500 focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-500/30 transition-all leading-relaxed"
+                                    required
+                                ></textarea>
+                                <p id="error-description" class="hidden text-red-400 text-xs mt-1 flex items-center gap-1"></p>
+                            </div>
+
+                            <!-- Grid 2 cols: Catégorie & Ville -->
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                
+                                <!-- Catégorie -->
+                                <div class="space-y-1.5" id="field-group-categorie">
+                                    <label for="categorie" class="text-xs font-semibold text-zinc-200">
+                                        Catégorie <span class="text-orange-400">*</span>
+                                    </label>
+                                    <select 
+                                        id="categorie" 
+                                        name="id_categorie" 
+                                        class="w-full h-11 bg-zinc-950 border border-zinc-800 rounded-lg px-3 text-xs text-zinc-100 focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-500/30 transition-all cursor-pointer"
+                                        required
+                                    >
+                                        <option value="">Chargement des catégories...</option>
+                                    </select>
+                                    <p id="error-categorie" class="hidden text-red-400 text-xs mt-1 flex items-center gap-1"></p>
+                                </div>
+
+                                <!-- Ville -->
+                                <div class="space-y-1.5" id="field-group-ville">
+                                    <label for="ville" class="text-xs font-semibold text-zinc-200">
+                                        Ville <span class="text-orange-400">*</span>
+                                    </label>
+                                    <select 
+                                        id="ville" 
+                                        name="id_ville" 
+                                        class="w-full h-11 bg-zinc-950 border border-zinc-800 rounded-lg px-3 text-xs text-zinc-100 focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-500/30 transition-all cursor-pointer"
+                                        required
+                                    >
+                                        <option value="">Chargement des villes...</option>
+                                    </select>
+                                    <p id="error-ville" class="hidden text-red-400 text-xs mt-1 flex items-center gap-1"></p>
+                                </div>
+
+                            </div>
+
+                            <!-- Prix -->
+                            <div class="space-y-1.5" id="field-group-prix">
+                                <label for="prix" class="text-xs font-semibold text-zinc-200">
+                                    Prix de vente <span class="text-orange-400">*</span>
+                                </label>
+                                <div class="relative rounded-lg">
+                                    <input 
+                                        type="number" 
+                                        id="prix" 
+                                        name="prix" 
+                                        step="0.01" 
+                                        min="1" 
+                                        placeholder="0.00" 
+                                        class="w-full h-11 bg-zinc-950 border border-zinc-800 rounded-lg pl-3.5 pr-16 text-xs text-zinc-100 placeholder-zinc-500 focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-500/30 transition-all font-mono font-medium"
+                                        required
+                                    >
+                                    <div class="absolute inset-y-0 right-0 pr-3.5 flex items-center pointer-events-none text-zinc-400 text-xs font-semibold">
+                                        MAD
+                                    </div>
+                                </div>
+                                <p id="error-prix" class="hidden text-red-400 text-xs mt-1 flex items-center gap-1"></p>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <!-- ════════════ RIGHT COLUMN (1/3) : Photos & Publication ════════════ -->
+                    <div class="space-y-6">
+
+                        <!-- Card 1: Photos -->
+                        <div class="bg-zinc-900 border border-zinc-800 rounded-2xl p-5 sm:p-6 shadow-sm space-y-4">
+                            <div class="flex items-center justify-between border-b border-zinc-800 pb-3">
+                                <div>
+                                    <h2 class="text-sm font-semibold text-zinc-100 flex items-center gap-2">
+                                        <span class="w-2 h-2 rounded-full bg-orange-500"></span>
+                                        <span>Photo de l'article</span> <span class="text-orange-400">*</span>
+                                    </h2>
+                                    <p class="text-[11px] text-zinc-400 mt-0.5">JPG, PNG ou WEBP (max. 5 Mo).</p>
+                                </div>
+                                <span id="photos-counter" class="text-[11px] font-mono px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 border border-zinc-700/60">
+                                    0 / 1
+                                </span>
+                            </div>
+
+                            <!-- Drag & Drop Upload Zone -->
+                            <div 
+                                id="drop-zone" 
+                                class="border-2 border-dashed border-zinc-800 hover:border-orange-500/60 rounded-xl p-5 text-center cursor-pointer transition-all bg-zinc-950/50 hover:bg-zinc-950 group"
+                                onclick="document.getElementById('file-input').click()"
+                            >
+                                <input 
+                                    type="file" 
+                                    id="file-input" 
+                                    name="photo"
+                                    accept="image/jpeg,image/png,image/webp" 
+                                    class="hidden"
+                                >
+                                <div class="flex flex-col items-center justify-center gap-2 pointer-events-none">
+                                    <div class="w-10 h-10 rounded-xl bg-zinc-900 border border-zinc-800 flex items-center justify-center text-zinc-400 group-hover:text-orange-400 group-hover:border-orange-500/40 transition-colors">
+                                        <svg class="w-5 h-5"><use href="#icon-upload-cloud"></use></svg>
+                                    </div>
+                                    <div class="text-xs">
+                                        <span class="text-orange-400 font-semibold group-hover:underline">Cliquez pour importer</span>
+                                        <span class="text-zinc-400"> ou glissez-déposez</span>
+                                    </div>
+                                    <p class="text-[10px] text-zinc-500">JPG, PNG, WEBP jusqu'à 5 Mo</p>
+                                </div>
+                            </div>
+
+                            <p id="error-photo" class="hidden text-red-400 text-xs mt-1 flex items-center gap-1"></p>
+
+                            <!-- Thumbnail Preview Grid -->
+                            <div id="photos-grid" class="pt-1">
+                                <!-- Dynamic thumbnail preview -->
+                            </div>
+                        </div>
+
+                        <!-- Card 2: Publication & Options -->
+                        <div class="bg-zinc-900 border border-zinc-800 rounded-2xl p-5 sm:p-6 shadow-sm space-y-4">
+                            <div class="border-b border-zinc-800 pb-3">
+                                <h2 class="text-sm font-semibold text-zinc-100 flex items-center gap-2">
+                                    <span class="w-2 h-2 rounded-full bg-orange-500"></span>
+                                    <span>Publication & État</span>
+                                </h2>
+                                <p class="text-[11px] text-zinc-400 mt-0.5">Condition d'usure du matériel.</p>
+                            </div>
+
+                            <!-- État -->
+                            <div class="space-y-1.5" id="field-group-etat">
+                                <label for="etat" class="text-xs font-semibold text-zinc-200">
+                                    État de l'article <span class="text-orange-400">*</span>
+                                </label>
+                                <select 
+                                    id="etat" 
+                                    name="etat" 
+                                    class="w-full h-11 bg-zinc-950 border border-zinc-800 rounded-lg px-3 text-xs text-zinc-100 focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-500/30 transition-all cursor-pointer"
+                                    required
+                                >
+                                    <option value="like_new" selected>Comme neuf</option>
+                                    <option value="good">Bon état</option>
+                                    <option value="fair">État moyen</option>
+                                    <option value="needs_repair">À réparer / Pour pièces</option>
+                                </select>
+                            </div>
+
+                            <!-- Info auto-sync -->
+                            <div class="p-3 rounded-xl bg-zinc-950/80 border border-zinc-800/80 space-y-1 text-[11px] text-zinc-400">
+                                <div class="flex items-center gap-1.5 text-orange-400 font-semibold">
+                                    <svg class="w-3.5 h-3.5"><use href="#icon-sparkles"></use></svg>
+                                    <span>Synchronisation double</span>
+                                </div>
+                                <p>Toute création est enregistrée en direct dans MySQL et synchronisée avec le fichier <code class="text-zinc-300 font-mono">backend/storage/annonces.json</code>.</p>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- ════════════ STICKY BOTTOM ACTION BAR ════════════ -->
+                <div class="sticky bottom-0 bg-zinc-900/95 backdrop-blur border border-zinc-800 rounded-2xl p-4 shadow-2xl flex items-center justify-between gap-4 z-30">
+                    <a 
+                        href="index.html" 
+                        class="px-4 py-2.5 bg-zinc-800 hover:bg-zinc-750 text-zinc-300 hover:text-zinc-100 border border-zinc-700 font-medium text-xs rounded-lg transition-colors"
+                    >
+                        Annuler
+                    </a>
+
+                    <div class="flex items-center gap-3">
+                        <button 
+                            type="submit" 
+                            id="submit-btn" 
+                            class="inline-flex items-center justify-center gap-2 px-6 py-2.5 bg-orange-500 hover:bg-orange-600 text-zinc-950 hover:text-black font-semibold text-xs rounded-lg transition-all shadow-lg shadow-orange-500/20 active:scale-[0.98]"
+                        >
+                            <span>Publier l'annonce</span>
+                        </button>
+                    </div>
+                </div>
+
+            </form>
+
+        </main>
+
+        <!-- ── Footer ── -->
+        <footer class="border-t border-zinc-800/80 bg-zinc-900/40 py-4 px-6 text-center text-xs text-zinc-500 mt-auto">
+            TechSwap Maroc &mdash; Plateforme de petites annonces d'électronique d'occasion &copy; 2026
+        </footer>
+
+    </div>
+
+    <!-- ════════════════════════════════════ JAVASCRIPT LOGIC ═══════════════════════════════════ -->
+    <script>
+        'use strict';
+
+        const API_URL = '../backend/api/annonces.php';
+        let selectedFile = null;
+
+        // ── Dropdowns initialization from API ──────────────────────────────────────
+        async function initDropdowns() {
+            const catSelect = document.getElementById('categorie');
+            const villeSelect = document.getElementById('ville');
+
+            try {
+                // Fetch categories
+                const catRes = await fetch(`${API_URL}?action=categories`);
+                const catData = await catRes.json();
+                if (catData.success && Array.isArray(catData.data)) {
+                    catSelect.innerHTML = '<option value="">-- Choisir une catégorie --</option>';
+                    catData.data.forEach(item => {
+                        const opt = document.createElement('option');
+                        opt.value = item.id_categorie;
+                        opt.textContent = item.categorie;
+                        catSelect.appendChild(opt);
+                    });
+                }
+
+                // Fetch villes
+                const villeRes = await fetch(`${API_URL}?action=villes`);
+                const villeData = await villeRes.json();
+                if (villeData.success && Array.isArray(villeData.data)) {
+                    villeSelect.innerHTML = '<option value="">-- Choisir une ville --</option>';
+                    villeData.data.forEach(item => {
+                        const opt = document.createElement('option');
+                        opt.value = item.id_ville;
+                        opt.textContent = item.ville;
+                        villeSelect.appendChild(opt);
+                    });
+                }
+            } catch (err) {
+                console.error("Erreur chargement dropdowns API:", err);
+            }
+        }
+
+        // ── Character Counters ─────────────────────────────────────────────────────
+        function initCounters() {
+            const titreInput = document.getElementById('titre');
+            const titreCounter = document.getElementById('titre-counter');
+            
+            const descInput = document.getElementById('description');
+            const descCounter = document.getElementById('description-counter');
+
+            titreInput.addEventListener('input', () => {
+                const len = titreInput.value.length;
+                titreCounter.textContent = `${len} / 80`;
+                titreCounter.classList.toggle('text-red-400', len > 80);
+            });
+
+            descInput.addEventListener('input', () => {
+                const len = descInput.value.length;
+                descCounter.textContent = `${len} / 20 min`;
+                if (len < 20 && len > 0) {
+                    descCounter.className = 'text-[11px] text-orange-400 font-mono';
+                } else if (len >= 20) {
+                    descCounter.className = 'text-[11px] text-emerald-400 font-mono';
+                } else {
+                    descCounter.className = 'text-[11px] text-zinc-500 font-mono';
+                }
+            });
+        }
+
+        // ── Photo Upload & Drag/Drop ───────────────────────────────────────────────
+        function initPhotosUploader() {
+            const dropZone = document.getElementById('drop-zone');
+            const fileInput = document.getElementById('file-input');
+
+            ['dragenter', 'dragover'].forEach(eventName => {
+                dropZone.addEventListener(eventName, (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    dropZone.classList.add('border-orange-500', 'bg-zinc-900/80');
+                });
+            });
+
+            ['dragleave', 'drop'].forEach(eventName => {
+                dropZone.addEventListener(eventName, (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    dropZone.classList.remove('border-orange-500', 'bg-zinc-900/80');
+                });
+            });
+
+            dropZone.addEventListener('drop', (e) => {
+                const files = e.dataTransfer.files;
+                if (files && files.length > 0) handleFile(files[0]);
+            });
+
+            fileInput.addEventListener('change', () => {
+                if (fileInput.files && fileInput.files.length > 0) {
+                    handleFile(fileInput.files[0]);
+                }
+            });
+        }
+
+        function handleFile(file) {
+            const errorElem = document.getElementById('error-photo');
+            errorElem.classList.add('hidden');
+            errorElem.textContent = '';
+
+            if (!file.type.startsWith('image/')) {
+                showPhotoError('Format de fichier non valide. Seules les images sont acceptées.');
+                return;
+            }
+
+            if (file.size > 5 * 1024 * 1024) {
+                showPhotoError('La photo ne doit pas dépasser 5 Mo.');
+                return;
+            }
+
+            selectedFile = file;
+            renderPhotoPreview();
+        }
+
+        function showPhotoError(msg) {
+            const errorElem = document.getElementById('error-photo');
+            errorElem.textContent = msg;
+            errorElem.classList.remove('hidden');
+        }
+
+        function removeSelectedPhoto() {
+            selectedFile = null;
+            document.getElementById('file-input').value = '';
+            renderPhotoPreview();
+        }
+
+        function renderPhotoPreview() {
+            const grid = document.getElementById('photos-grid');
+            const counter = document.getElementById('photos-counter');
+
+            if (!selectedFile) {
+                grid.innerHTML = '';
+                counter.textContent = '0 / 1';
+                return;
+            }
+
+            counter.textContent = '1 / 1';
+            const url = URL.createObjectURL(selectedFile);
+
+            grid.innerHTML = `
+                <div class="relative group aspect-video rounded-xl overflow-hidden bg-zinc-950 border border-orange-500/60 ring-2 ring-orange-500/20">
+                    <img 
+                        src="${url}" 
+                        alt="Photo principale" 
+                        class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200"
+                    />
+                    <span class="absolute top-1.5 left-1.5 px-2 py-0.5 rounded bg-orange-500 text-zinc-950 text-[10px] font-bold tracking-tight shadow-md">
+                        Photo principale
+                    </span>
+                    <button 
+                        type="button" 
+                        onclick="removeSelectedPhoto()"
+                        class="absolute top-1.5 right-1.5 w-7 h-7 rounded-lg bg-zinc-950/80 hover:bg-red-600 text-zinc-300 hover:text-white flex items-center justify-center transition-colors shadow-md border border-zinc-700/60"
+                        aria-label="Supprimer cette photo"
+                        title="Supprimer la photo"
+                    >
+                        <svg class="w-3.5 h-3.5"><use href="#icon-trash"></use></svg>
+                    </button>
+                </div>
+            `;
+        }
+
+        // ── Form Validation & Backend API Submission ───────────────────────────────
+        function initFormValidation() {
+            const form = document.getElementById('add-annonce-form');
+
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                clearAllErrors();
+
+                let isValid = true;
+                let firstErrorElement = null;
+
+                const titre = document.getElementById('titre').value.trim();
+                const description = document.getElementById('description').value.trim();
+                const id_categorie = document.getElementById('categorie').value;
+                const id_ville = document.getElementById('ville').value;
+                const prixVal = document.getElementById('prix').value;
+                const prix = parseFloat(prixVal);
+                const etat = document.getElementById('etat').value;
+
+                if (!titre) {
+                    setFieldError('titre', 'Le titre est obligatoire.');
+                    if (!firstErrorElement) firstErrorElement = document.getElementById('titre');
+                    isValid = false;
+                } else if (titre.length < 5 || titre.length > 80) {
+                    setFieldError('titre', 'Le titre doit comporter entre 5 et 80 caractères.');
+                    if (!firstErrorElement) firstErrorElement = document.getElementById('titre');
+                    isValid = false;
+                }
+
+                if (!description) {
+                    setFieldError('description', 'La description est obligatoire.');
+                    if (!firstErrorElement) firstErrorElement = document.getElementById('description');
+                    isValid = false;
+                } else if (description.length < 10) {
+                    setFieldError('description', 'La description doit comporter au moins 10 caractères.');
+                    if (!firstErrorElement) firstErrorElement = document.getElementById('description');
+                    isValid = false;
+                }
+
+                if (!id_categorie) {
+                    setFieldError('categorie', 'Veuillez sélectionner une catégorie.');
+                    if (!firstErrorElement) firstErrorElement = document.getElementById('categorie');
+                    isValid = false;
+                }
+
+                if (!id_ville) {
+                    setFieldError('ville', 'Veuillez sélectionner une ville.');
+                    if (!firstErrorElement) firstErrorElement = document.getElementById('ville');
+                    isValid = false;
+                }
+
+                if (!prixVal || isNaN(prix) || prix <= 0) {
+                    setFieldError('prix', 'Veuillez indiquer un prix valide supérieur à 0 MAD.');
+                    if (!firstErrorElement) firstErrorElement = document.getElementById('prix');
+                    isValid = false;
+                }
+
+                if (!selectedFile) {
+                    showPhotoError('La photo est obligatoire pour créer une annonce.');
+                    if (!firstErrorElement) firstErrorElement = document.getElementById('drop-zone');
+                    isValid = false;
+                }
+
+                if (!isValid) {
+                    if (firstErrorElement) {
+                        firstErrorElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        if (typeof firstErrorElement.focus === 'function') firstErrorElement.focus();
+                    }
+                    return;
+                }
+
+                // Send to backend via FormData
+                const formData = new FormData();
+                formData.append('titre', titre);
+                formData.append('description', description);
+                formData.append('id_categorie', id_categorie);
+                formData.append('id_ville', id_ville);
+                formData.append('prix', prix);
+                formData.append('etat', etat);
+                formData.append('photo', selectedFile);
+
+                const submitBtn = document.getElementById('submit-btn');
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = `
+                    <div class="w-4 h-4 border-2 border-zinc-950 border-t-transparent rounded-full animate-spin"></div>
+                    <span>Enregistrement en base...</span>
+                `;
+
+                try {
+                    const response = await fetch(API_URL, {
+                        method: 'POST',
+                        body: formData
+                    });
+
+                    const result = await response.json();
+
+                    if (!response.ok || !result.success) {
+                        throw new Error(result.error || result.detail || 'Erreur lors de la création');
+                    }
+
+                    showToast("Annonce enregistrée dans la base et le fichier JSON !");
+
+                    setTimeout(() => {
+                        window.location.href = 'index.html';
+                    }, 1200);
+
+                } catch (err) {
+                    console.error("Erreur API:", err);
+                    const globalErr = document.getElementById('global-error');
+                    const globalMsg = document.getElementById('global-error-msg');
+                    globalMsg.textContent = err.message || "Erreur de connexion au serveur.";
+                    globalErr.classList.remove('hidden');
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = `<span>Publier l'annonce</span>`;
+                }
+            });
+        }
+
+        function setFieldError(fieldId, errorMsg) {
+            const input = document.getElementById(fieldId);
+            const errorElem = document.getElementById(`error-${fieldId}`);
+            if (input) {
+                input.classList.add('border-red-500', 'focus:ring-red-500/30', 'focus:border-red-500');
+                input.classList.remove('border-zinc-800', 'focus:border-orange-500');
+            }
+            if (errorElem) {
+                errorElem.textContent = errorMsg;
+                errorElem.classList.remove('hidden');
+            }
+        }
+
+        function clearAllErrors() {
+            document.querySelectorAll('[id^="error-"]').forEach(el => {
+                el.textContent = '';
+                el.classList.add('hidden');
+            });
+            document.querySelectorAll('input, textarea, select').forEach(input => {
+                input.classList.remove('border-red-500', 'focus:ring-red-500/30', 'focus:border-red-500');
+                input.classList.add('border-zinc-800');
+            });
+            document.getElementById('global-error').classList.add('hidden');
+        }
+
+        function showToast(message) {
+            const container = document.getElementById('toast-container');
+            if (!container) return;
+
+            const toast = document.createElement('div');
+            toast.className = 'pointer-events-auto flex items-center gap-2.5 px-4 py-3 bg-zinc-900 border border-emerald-500/40 text-emerald-300 rounded-xl shadow-2xl shadow-black/80 text-xs font-semibold backdrop-blur transition-all duration-300 transform translate-y-0 opacity-100';
+            toast.innerHTML = `
+                <div class="w-5 h-5 rounded-full bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center text-emerald-400 flex-shrink-0">
+                    <svg class="w-3.5 h-3.5"><use href="#icon-check-circle"></use></svg>
+                </div>
+                <span>${message}</span>
+            `;
+
+            container.appendChild(toast);
+
+            setTimeout(() => {
+                toast.classList.add('opacity-0', '-translate-y-2');
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        function openSidebar() {
+            document.getElementById('sidebar').classList.remove('-translate-x-full');
+            document.getElementById('sidebar-overlay').classList.remove('hidden');
+            document.body.classList.add('overflow-hidden', 'lg:overflow-auto');
+        }
+
+        function closeSidebar() {
+            document.getElementById('sidebar').classList.add('-translate-x-full');
+            document.getElementById('sidebar-overlay').classList.add('hidden');
+            document.body.classList.remove('overflow-hidden', 'lg:overflow-auto');
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            initDropdowns();
+            initCounters();
+            initPhotosUploader();
+            initFormValidation();
+        });
+    </script>
 </body>
 </html>

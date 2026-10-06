@@ -298,7 +298,8 @@ class Annonce
         if ($titre === '') {
             throw new \InvalidArgumentException('Le titre est obligatoire.');
         }
-        if (mb_strlen($titre) < 5 || mb_strlen($titre) > 150) {
+        $titreLen = function_exists('mb_strlen') ? mb_strlen($titre) : strlen($titre);
+        if ($titreLen < 5 || $titreLen > 150) {
             throw new \InvalidArgumentException('Le titre doit comporter entre 5 et 150 caractères.');
         }
 
@@ -306,7 +307,8 @@ class Annonce
         if ($description === '') {
             throw new \InvalidArgumentException('La description est obligatoire.');
         }
-        if (mb_strlen($description) < 10) {
+        $descLen = function_exists('mb_strlen') ? mb_strlen($description) : strlen($description);
+        if ($descLen < 10) {
             throw new \InvalidArgumentException('La description doit comporter au moins 10 caractères.');
         }
 

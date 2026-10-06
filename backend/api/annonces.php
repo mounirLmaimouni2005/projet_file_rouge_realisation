@@ -101,10 +101,24 @@ function handleUpload(): string|false
         throw new \RuntimeException('Format non autorisé. Utilisez JPG, PNG ou WEBP.');
     }
 
-    // Real MIME check (prevents disguised uploads)
-    $finfo        = new finfo(FILEINFO_MIME_TYPE);
-    $mime         = $finfo->file($_FILES['photo']['tmp_name']);
+    // Real MIME check (supports finfo, mime_content_type, getimagesize fallback)
     $allowedMimes = ['image/jpeg', 'image/png', 'image/webp'];
+    $mime = null;
+
+    if (class_exists('finfo')) {
+        $finfo = new \finfo(FILEINFO_MIME_TYPE);
+        $mime  = $finfo->file($_FILES['photo']['tmp_name']);
+    } elseif (function_exists('mime_content_type')) {
+        $mime = mime_content_type($_FILES['photo']['tmp_name']);
+    } elseif (function_exists('getimagesize')) {
+        $imgInfo = @getimagesize($_FILES['photo']['tmp_name']);
+        if ($imgInfo !== false && !empty($imgInfo['mime'])) {
+            $mime = $imgInfo['mime'];
+        }
+    } else {
+        $mime = $_FILES['photo']['type'] ?? '';
+    }
+
     if (!in_array($mime, $allowedMimes, true)) {
         throw new \RuntimeException('Type de fichier non autorisé.');
     }

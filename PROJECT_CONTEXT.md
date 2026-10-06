@@ -14,32 +14,52 @@ A **second-hand electronics classifieds marketplace** for Morocco. Sellers post 
 
 ## Tech Stack
 
-- **Backend:** PHP (procedural, no framework, no OOP)
-- **Database:** MySQL/MariaDB via PDO (prepared statements)
-- **Frontend:** HTML + Bootstrap 5.3.3 (CDN) + Font Awesome 6.4.0 (CDN)
-- **CSS:** Inline `<style>` blocks per page (spec says "external style.css" but not followed)
-- **JS:** None — all interactions are full-page form submissions
-- **Server:** Local LAMP/WAMP/XAMPP
-- **No package manager** — no composer.json, no package.json
+- **Backend:** PHP 8.0+ (OOP Model Architecture, RESTful JSON API)
+- **Database:** MySQL / MariaDB via PDO (prepared statements, strict error mode)
+- **Frontend:** HTML5 + Tailwind CSS (CDN) + Font Awesome 6.4.0 (CDN) + JavaScript (ES6+, Fetch API)
+- **Storage:** Local server uploads (`backend/uploads/`) + JSON mirror backup (`backend/storage/annonces.json`)
+- **Server:** Local LAMP/WAMP/XAMPP with Apache (`.htaccess` rules)
+- **No external package manager** — Native PHP & standard web APIs
 
 ## Project Structure
 
-```
+```text
 projet_file_rouge_realisation/
+│
+├── backend/
+│   ├── api/
+│   │   └── annonces.php                  # RESTful JSON API endpoint (Controller / Router)
+│   ├── classes/
+│   │   ├── Annonce.php                   # OOP Model (SQL operations, validation, JSON sync)
+│   │   └── JsonStorage.php               # File-based JSON storage synchronizer
+│   ├── config/
+│   │   └── Database.php                  # PDO connection factory (Singleton)
+│   ├── storage/
+│   │   └── annonces.json                 # Synchronized JSON data backup
+│   ├── uploads/                          # Stored announcement photos
+│   │   └── .htaccess                     # Upload directory security
+│   └── .htaccess                         # Backend CORS / routing rules
+│
+├── frontend/
+│   ├── js/
+│   │   └── annonces.js                   # Client-side controller (Fetch API, DOM events, UI alerts)
+│   ├── add.html                          # Create listing view (CREATE)
+│   ├── edit.html                         # Edit listing view (UPDATE)
+│   └── list.html                         # List & delete listings view (READ / DELETE)
+│
 ├── database/
-│   ├── database .sql            # DDL + seed data (note: space in filename)
-│   └── database_connect.php     # PDO connection → exposes global $pdo
-├── src/                         # All application pages (webroot context)
-│   ├── add_anance.php           # Create listing (⚠ typo: should be add_annonce)
-│   ├── list_annonces.php        # List all listings (table view)
-│   ├── edit_annonce.php         # Edit listing form + update logic
-│   ├── delete_annonce.php       # Delete listing + remove photo file
-│   └── uploads/                 # Uploaded product images
-├── realisation_donnee/          # MERISE design docs (not code)
-│   ├── promt.text.txt           # Full project requirements / prompts
-│   ├── dectionair_de_donnee.csv # Data dictionary
-│   └── depandence_cordinalites.csv  # Functional dependencies (actually Marp slides)
-└── PROJECT_CONTEXT.md           # This file
+│   ├── database .sql                     # Relational schema DDL + initial seeds
+│   └── database_connect.php              # PDO connection script
+│
+├── realisation_donnee/                   # MERISE design deliverables & sprint requirements
+│   ├── dectionair_de_donnee.csv          # Data dictionary
+│   ├── depandence_cordinalites.csv       # Functional dependencies & cardinalities
+│   ├── promt_sprint1.txt                 # Sprint 1 prompts & requirements
+│   └── promt_sprint2.txt                 # Sprint 2 prompts & requirements
+│
+├── .vscode/
+│   └── settings.json
+└── PROJECT_CONTEXT.md                    # This architecture and context documentation
 ```
 
 ## Database: `techswap_morocco`
@@ -47,87 +67,85 @@ projet_file_rouge_realisation/
 | Table | Purpose | PK | Notes |
 |---|---|---|---|
 | `utilisateurs` | Users | `id_utilisateur INT UNSIGNED AI` | role ENUM('admin','seller','buyer') |
-| `categories` | 13 fixed categories | `id_categorie SMALLINT UNSIGNED AI` | Seeded, not user-editable |
-| `villes` | 21 Moroccan cities | `id_ville SMALLINT UNSIGNED AI` | Seeded, not user-editable |
+| `categories` | 13 fixed categories | `id_categorie SMALLINT UNSIGNED AI` | Seeded, fixed business categories |
+| `villes` | 21 Moroccan cities | `id_ville SMALLINT UNSIGNED AI` | Seeded, fixed list of major cities |
 | `annonces` | Product listings | `id_annonce INT UNSIGNED AI` | FKs → utilisateurs, categories, villes |
 
 **Key columns on `annonces`:**
 - `etat` ENUM: `like_new`, `good`, `fair`, `needs_repair`
 - `statut` ENUM: `available`, `sold`
-- `photo` VARCHAR: relative file path to uploaded image
-- `date_modification`, `date_vente`: nullable, currently never set by code
+- `photo` VARCHAR: relative path to uploaded image (`uploads/img_...`)
+- `date_publication`: DATETIME DEFAULT CURRENT_TIMESTAMP
+- `date_modification`: DATETIME NULL (automatically updated via `NOW()` on edit)
+- `date_vente`: DATETIME NULL
 
-**All FKs:** `ON UPDATE CASCADE / ON DELETE RESTRICT`
-
-## What Is Implemented ✅
-
-- **CRUD for annonces** (create, list, edit, delete) — seller-side only
-- **Image upload** on create and edit (JPG/JPEG/PNG/WEBP)
-- **Photo cleanup** on delete (unlinks file from disk)
-- Categories and cities loaded dynamically from DB into `<select>` dropdowns
-
-## What Is NOT Implemented ❌
-
-- Authentication / registration / login / sessions
-- Role-based access control
-- Public catalog / browse page for buyers
-- Product detail page (`product-detail.php?id=X`)
-- WhatsApp contact button (pre-filled message with title + price)
-- Category / city / price filtering
-- Admin dashboard and moderation
-- Search functionality
-- Pagination
-
-## Page Responsibilities
-
-| File | Method | What It Does |
-|---|---|---|
-| `list_annonces.php` | GET | Fetches all annonces (JOIN categories + villes), renders Bootstrap table with edit/delete action links |
-| `add_anance.php` | GET/POST | GET: shows create form. POST: validates image, inserts row, redirects to list |
-| `edit_annonce.php` | GET/POST | GET: loads annonce by `?id=`, pre-fills form. POST: updates row, shows success message (stays on page) |
-| `delete_annonce.php` | GET | Receives `?id=`, deletes photo file + DB row, redirects to list |
+**All Foreign Keys:** `ON UPDATE CASCADE / ON DELETE RESTRICT`
 
 ## Data Flow Pattern
 
-Every page follows the same pattern:
-1. `require_once '../database/database_connect.php'` → gets global `$pdo`
-2. PHP logic block at top (query/insert/update/delete)
-3. HTML+Bootstrap markup below with embedded `<?php ?>` for rendering
-4. After create/delete: `header('Location: list_annonces.php')` redirect
-5. No AJAX, no API, no JavaScript logic
+```text
+Frontend (HTML/JS) ──fetch()──► REST API (annonces.php) ──► Model (Annonce.php) ──► PDO ──► MySQL
+                                        │                           │
+                             JSON Response Envelopes          syncJsonStorage()
+                             {success, data/error}                  │
+                                        ▲                           ▼
+                                        └───────── JsonStorage (annonces.json)
+```
+
+1. **Frontend:** HTML forms and events trigger async requests in `annonces.js` via `fetch()`.
+2. **REST API (`backend/api/annonces.php`):**
+   - Validates HTTP method (`GET`, `POST`, `DELETE`, and method override `_method=PUT` for multipart).
+   - Validates file uploads with `finfo` MIME type checks, size restrictions (<= 5 MB), and extension whitelisting.
+   - Cleans up replaced/deleted images from disk.
+   - Builds public absolute URLs for photos (`photo_url`).
+3. **OOP Model (`backend/classes/Annonce.php`):**
+   - Centralizes SQL prepared queries.
+   - Enforces data dictionary validations (field lengths, mandatory constraints, positive price, valid ENUMs).
+   - Automatically synchronizes data state to `backend/storage/annonces.json` via `JsonStorage`.
+4. **Database & PDO (`backend/config/Database.php`):**
+   - Provides an isolated, singleton PDO connection with exception handling and prepared statement emulation disabled.
+
+## What Is Implemented ✅
+
+- **Full decoupled CRUD for annonces** (create, read list, read single, update, delete).
+- **RESTful API** returning standardized JSON payloads (`{ success: true|false, data/error }`).
+- **OOP Architecture** separating HTTP controller logic, business validation, and database operations.
+- **Secure Image Uploads:**
+  - Real MIME verification (`finfo`) for `image/jpeg`, `image/png`, `image/webp`.
+  - Maximum upload size enforcement (5 MB).
+  - Unique naming (`uniqid('img_', true)`).
+  - Automatic unlinking of old photos on edit and delete.
+- **Dynamic Dropdowns:** Categories and Moroccan cities fetched asynchronously via API.
+- **Client-Side UX:** Live image preview, inline alerts, empty/loading states, confirmation prompts.
+- **JSON Mirror Backup:** Auto-sync to `backend/storage/annonces.json` on write operations.
+- **Fixed `date_modification`:** Updated to current timestamp on edits.
+
+## What Is NOT Implemented ❌
+
+- Authentication / registration / login / JWT or sessions (currently hardcoded to `id_utilisateur = 1`).
+- Role-based access control (Admin / Seller / Buyer).
+- Public catalog / browse page for buyers.
+- Product detail page with dynamic WhatsApp chat generator (`https://wa.me/...`).
+- Client-side filtering by category / city / price range.
+- Full-text search and pagination.
+- Admin moderation panel.
+
+## API Endpoints Reference
+
+| Method | Endpoint | Description |
+|---|---|---|
+| `GET` | `/backend/api/annonces.php` | Retrieve all listings |
+| `GET` | `/backend/api/annonces.php?id={id}` | Retrieve a single listing |
+| `GET` | `/backend/api/annonces.php?action=categories` | Retrieve all categories for dropdowns |
+| `GET` | `/backend/api/annonces.php?action=villes` | Retrieve all cities for dropdowns |
+| `POST` | `/backend/api/annonces.php` | Create a new listing (`multipart/form-data`) |
+| `POST` | `/backend/api/annonces.php?id={id}` (`_method=PUT`) | Update an existing listing (`multipart/form-data`) |
+| `DELETE` | `/backend/api/annonces.php?id={id}` | Delete a listing and remove its photo |
 
 ## Conventions to Preserve
 
-- **French UI labels**, French DB column/table names, English ENUM values
-- **PDO prepared statements** for all queries (consistently used)
-- **Bootstrap 5 card layout** with gradient header (`.modern-card` + `.card-header-custom`)
-- **Inline `<style>`** per page (duplicated — no shared CSS file exists)
-- **`id_utilisateur = 1`** hardcoded everywhere (no auth yet)
-- Upload naming: `uniqid('img_', true)` on create, `'annonce_' . time()` on edit
-
-## Known Bugs & Issues
-
-| Severity | Issue |
-|---|---|
-| 🔴 Critical | **No authentication** — all pages publicly accessible, anyone can CRUD |
-| 🔴 Critical | **Delete via GET** with no CSRF token — link-click deletes data |
-| 🔴 Critical | **DB password hardcoded** in `database_connect.php` (`13737115`) |
-| 🟡 Moderate | **Filename typo**: `add_anance.php` — the empty-state link in `list_annonces.php:86` points to `add_annonce.php` (correct spelling) → **broken link** |
-| 🟡 Moderate | **Inconsistent upload paths**: add uses `uploads/` (relative), edit uses `../uploads/` — files may land in different directories |
-| 🟡 Moderate | **`date_modification` never updated** on edit — UPDATE query omits it |
-| 🟡 Moderate | **No MIME type validation** on uploads — only file extension is checked |
-| 🟢 Minor | PDO connection try/catch doesn't wrap the `new PDO()` call itself |
-| 🟢 Minor | Seed user password in plain text (`123456`) in SQL file |
-| 🟢 Minor | No `.gitignore` — uploads and credentials at risk of being committed |
-| 🟢 Minor | CSS duplicated across all pages instead of a shared stylesheet |
-
-## Constraints for Future Development
-
-1. **Respect MERISE design** — the 4-entity model (utilisateurs, annonces, categories, villes) and their cardinalities are formal design deliverables
-2. **No e-commerce features** — no cart, no checkout, no payment. Contact is WhatsApp-only
-3. **13 categories are fixed** — seeded in DB, not user-manageable
-4. **Cities are fixed** — 21 Moroccan cities seeded in DB
-5. **Items must be second-hand only** — this is a core business rule
-6. **Keep procedural PHP** — the project is not OOP; don't introduce frameworks or MVC unless explicitly asked
-7. **Keep French UI** — all user-facing text is in French
-8. **Currency is MAD** (Moroccan Dirham) throughout
+- **French UI labels**, French database column/table names, English ENUM values.
+- **MERISE methodology design deliverables** in `realisation_donnee/` must remain respected.
+- **PDO prepared statements** for all SQL execution.
+- **Currency is MAD** (Moroccan Dirham) throughout.
+- **Second-hand items only** (core business model of TechSwap).
