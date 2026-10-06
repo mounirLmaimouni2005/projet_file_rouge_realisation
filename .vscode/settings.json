@@ -10,10 +10,27 @@
             "server": "localhost",
             "port": 3306,
             "driver": "MySQL",
-            "name": "connect_db",
-            "group": "connects",
+            "name": "coonecthv",
+            "group": " jhjhvhv",
+            "database": " techswap_morocco",
+            "username": "root",
+            "askForPassword": true
+        },
+        {
+            "mysqlOptions": {
+                "authProtocol": "default",
+                "enableSsl": "Disabled"
+            },
+            "ssh": "Disabled",
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 3306,
+            "driver": "MySQL",
+            "name": "conn",
+            "group": "sdqnjkfnqf",
             "database": "techswap_morocco",
-            "username": "root"
+            "username": "root",
+            "password": "13737115"
         }
     ]
 }

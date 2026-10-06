@@ -43,7 +43,7 @@ This analysis will be your context for all future modifications to this project.
 
 
 
-PROMT 2 : E Prepare the Architecture
+PROMT 2 : archetecture
 
 For this phase, focus ONLY on the `annonces` CRUD.
 
@@ -93,6 +93,86 @@ Start with the backend CRUD API only, then STOP and report what was created and 
 
 
 
+promt 3 : build frontend
+
+Now build ONLY the frontend for the existing annonces CRUD API.
+
+Create:
+
+```text
+frontend/
+├── list.html
+├── add.html
+├── edit.html
+└── js/
+    └── annonces.js
+```
+
+Use:
+
+* HTML
+* JavaScript `fetch()`
+* JSON API
+* FormData for create/update
+
+Implement:
+
+* Display annonces
+* Add annonce
+* Edit annonce
+* Delete annonce
+* Categories and villes dropdowns
+* Image upload
+* Success/error messages
+
+API:
+`/backend/api/annonces.php`
+
+Do NOT modify backend files.
+Do NOT add authentication, JSON storage, sync, or extra architecture.
+
+Keep the frontend simple, clean, and compatible with the existing database/API.
+
+After implementation, test the complete CRUD flow and STOP.
+
+
+
+
+
+
+
+
+
+
+
+promt 3 : add file JSON
+
+
+Add JSON file storage to the existing annonces CRUD.
+
+Create:
+
+```text
+backend/storage/
+└── annonces.json
+```
+
+Requirements:
+
+* Keep MySQL as the primary database.
+* Keep the existing OOP + PDO API.
+* `annonces.json` must contain the annonces data in JSON format.
+* After a successful CREATE, UPDATE, or DELETE in MySQL, update `annonces.json` too.
+* On GET, keep using MySQL for now.
+* Do not add frontend changes.
+* Do not add sync service or authentication yet.
+* Do not modify the existing database structure.
+
+Initialize `annonces.json` with the current annonces from MySQL.
+
+Then test that MySQL and `annonces.json` stay synchronized after CRUD operations.
+
+STOP after this task and report the changes.
 
 
 

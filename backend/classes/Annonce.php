@@ -1,12 +1,15 @@
 <?php
 
+require_once __DIR__ . '/JsonStorage.php';
+
 /**
  * Annonce — Model class for the `annonces` table.
  *
  * Responsibilities:
  *   - All SQL queries against annonces, categories, villes.
  *   - Input validation (throws InvalidArgumentException on failure).
- *   - No HTTP logic, no file I/O — that stays in the API layer.
+ *   - JSON file storage synchronization (backend/storage/annonces.json).
+ *   - No HTTP logic — that stays in the API layer.
  *
  * Requires PHP 8.0+  (union types: array|false, string|null)
  */
@@ -16,7 +19,14 @@ class Annonce
     private const VALID_ETATS   = ['like_new', 'good', 'fair', 'needs_repair'];
     private const VALID_STATUTS = ['available', 'sold'];
 
-    public function __construct(private PDO $pdo) {}
+    public function __construct(
+        private PDO $pdo,
+        private ?JsonStorage $jsonStorage = null
+    ) {
+        if ($this->jsonStorage === null) {
+            $this->jsonStorage = new JsonStorage();
+        }
+    }
 
     // ─────────────────────────────────────────────────────────────────────────
     // READ
@@ -128,7 +138,9 @@ class Annonce
             ':photo'          => $data['photo'],
         ]);
 
-        return (int) $this->pdo->lastInsertId();
+        $newId = (int) $this->pdo->lastInsertId();
+        $this->syncJsonStorage();
+        return $newId;
     }
 
     // ─────────────────────────────────────────────────────────────────────────
@@ -193,6 +205,8 @@ class Annonce
             ':id'           => $id,
         ]);
 
+        $this->syncJsonStorage();
+
         return true;    // execute() throws on error; reaching here means success
     }
 
@@ -217,7 +231,29 @@ class Annonce
         $stmt = $this->pdo->prepare('DELETE FROM annonces WHERE id_annonce = :id');
         $stmt->execute([':id' => $id]);
 
+        $this->syncJsonStorage();
+
         return $existing;   // caller uses $existing['photo'] to unlink the file
+    }
+
+    // ─────────────────────────────────────────────────────────────────────────
+    // JSON STORAGE SYNC
+    // ─────────────────────────────────────────────────────────────────────────
+
+    /**
+     * Synchronize the current state of annonces from MySQL to JSON file storage.
+     */
+    public function syncJsonStorage(): bool
+    {
+        if ($this->jsonStorage !== null) {
+            return $this->jsonStorage->save($this->getAll());
+        }
+        return false;
+    }
+
+    public function getJsonStorage(): ?JsonStorage
+    {
+        return $this->jsonStorage;
     }
 
     // ─────────────────────────────────────────────────────────────────────────

@@ -1,0 +1,34 @@
+[
+    {
+        "id_annonce": 11,
+        "titre": "iphone",
+        "description": ";;;;;;;;;;;;;;;;;;;;ljhkugyuftyd",
+        "prix": "56666.00",
+        "etat": "fair",
+        "statut": "available",
+        "photo": "uploads/img_6ac43d4d4c3885.28261854.png",
+        "date_publication": "2026-10-06 02:13:32",
+        "date_modification": "2026-10-06 02:14:05",
+        "id_utilisateur": 1,
+        "id_categorie": 12,
+        "id_ville": 1,
+        "categorie": "Edge Computing & Mini-Data/NAS",
+        "ville": "Casablanca"
+    },
+    {
+        "id_annonce": 9,
+        "titre": "iphone",
+        "description": "efffffffffffffffffffffffffffffffffffffffff",
+        "prix": "20000.00",
+        "etat": "good",
+        "statut": "available",
+        "photo": "uploads/img_6ac439eeaa0309.27805554.png",
+        "date_publication": "2026-10-06 01:59:42",
+        "date_modification": null,
+        "id_utilisateur": 1,
+        "id_categorie": 2,
+        "id_ville": 2,
+        "categorie": "Computers & IT",
+        "ville": "Rabat"
+    }
+]
