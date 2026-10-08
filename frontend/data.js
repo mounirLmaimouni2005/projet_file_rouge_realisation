@@ -1,17 +1,22 @@
 /**
  * TechSwap Maroc — Data Source
- * Listings, Categories & Cities
+ * Seeded with realistic Moroccan listings matching MySQL & backend/storage/annonces.json
  */
 
 const CATEGORIES = [
-    "Smartphones",
-    "Ordinateurs portables",
-    "Consoles & Jeux",
-    "Tablettes",
-    "Audio & Hi-Fi",
-    "Écrans & Moniteurs",
-    "Accessoires & Périphériques",
-    "Photo & Caméras"
+    "Smartphones & Tablets",
+    "Computers & IT",
+    "Household Appliances - Domestique",
+    "TV & Audio",
+    "Pro & Commercial Gear - HoReCa/POS/Vitrines",
+    "Gaming & Consoles",
+    "Cameras & Creator Gear",
+    "Green Energy & Smart Home",
+    "Networking & Telecom",
+    "DIY, Repair & Lab Tools",
+    "Pro Audio & Live Events",
+    "Edge Computing & Mini-Data/NAS",
+    "Micro-Mobility Tech - Trottinettes/E-bikes"
 ];
 
 const VILLES = [
@@ -19,128 +24,168 @@ const VILLES = [
     "Rabat",
     "Marrakech",
     "Tanger",
-    "Fès",
     "Agadir",
+    "Fès",
+    "Meknès",
+    "Oujda",
+    "Kenitra",
+    "Tétouan",
+    "Safi",
+    "El Jadida",
+    "Béni Mellal",
+    "Nador",
+    "Mohammedia",
+    "Khouribga",
+    "Settat",
+    "Essaouira",
     "Ifrane",
-    "El Jadida"
+    "Laâyoune",
+    "Dakhla"
 ];
 
 const ANNONCES = [
     {
-        id: 1,
-        titre: "MacBook Pro 14\" M1 Pro (16 Go / 512 Go SSD)",
-        description: "MacBook Pro 14 pouces en parfait état, santé batterie 94%, chargeur MagSafe 67W d'origine et boîte complète inclus.",
-        categorie: "Ordinateurs portables",
+        id: 15,
+        titre: "Apple MacBook Pro 14\" M2 Pro (16 Go / 512 Go SSD)",
+        description: "MacBook Pro 14 pouces gris sidéral en parfait état cosmétique et fonctionnel. Santé de la batterie 95%, vendu avec chargeur d'origine 67W, câble MagSafe et boîte. Jamais réparé, acheté à la Fnac.",
+        categorie: "Computers & IT",
         ville: "Casablanca",
-        prix: 13500,
-        etat: "Comme neuf",
-        statut: "Disponible",
+        prix: 14500,
+        etat: "like_new",
+        statut: "available",
         photos: [
-            "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=500&auto=format&fit=crop&q=80"
+            "../backend/uploads/img_6ac439eeaa0309.27805554.png"
         ],
-        date: "2026-03-28"
+        date: "2026-10-08"
     },
     {
-        id: 2,
-        titre: "iPhone 14 Pro Max 256 Go Noir Sidéral",
-        description: "Batterie 89%, aucun impact ni micro-rayure, protégé dès le premier jour avec verre trempé et coque Spigen. Facture d'achat fournie.",
-        categorie: "Smartphones",
+        id: 16,
+        titre: "iPhone 14 Pro 256 Go Noir Sidéral (Batterie 91%)",
+        description: "iPhone 14 Pro 256 Go sans aucune micro-rayure ni choc. Toujours protégé avec verre trempé et coque Spigen. Vendu avec boîte d'origine, câble lightning et facture. Face ID et caméras impeccables.",
+        categorie: "Smartphones & Tablets",
         ville: "Rabat",
-        prix: 8900,
-        etat: "Très bon état",
-        statut: "Disponible",
+        prix: 8200,
+        etat: "like_new",
+        statut: "available",
         photos: [
-            "https://images.unsplash.com/photo-1678685888221-cda773a3dcdb?w=500&auto=format&fit=crop&q=80"
+            "../backend/uploads/img_6ac43d4d4c3885.28261854.png"
         ],
-        date: "2026-03-30"
+        date: "2026-10-08"
     },
     {
-        id: 3,
-        titre: "PlayStation 5 Édition Standard + 2 Manettes DualSense",
-        description: "PS5 avec lecteur disque, 2 manettes officielles sans aucun stick drift, câble HDMI 2.1 ultra high-speed et socle. Très peu servie.",
-        categorie: "Consoles & Jeux",
+        id: 17,
+        titre: "Sony PlayStation 5 Standard + 2 Manettes DualSense + FIFA",
+        description: "Console PS5 édition avec lecteur blu-ray en très bon état. Livrée avec deux manettes officielles DualSense blanches en parfait état (zéro drift), socle, câble HDMI 2.1 et jeu EA FC 24.",
+        categorie: "Gaming & Consoles",
         ville: "Marrakech",
-        prix: 4600,
-        etat: "Comme neuf",
-        statut: "Disponible",
+        prix: 4800,
+        etat: "like_new",
+        statut: "available",
         photos: [
-            "https://images.unsplash.com/photo-1606813907291-d86efa9b94db?w=500&auto=format&fit=crop&q=80"
+            "../backend/uploads/img_6ac4d62f9001f9.73026289.png"
         ],
-        date: "2026-04-01"
+        date: "2026-10-08"
     },
     {
-        id: 4,
-        titre: "Dell XPS 15 9520 (i7 12th / 32 Go / 1 To SSD / RTX 3050)",
-        description: "Station mobile de travail puissante pour dev et graphisme. Écran 3.5K OLED tactile somptueux. Légère trace d'usure sur le capot inférieur.",
-        categorie: "Ordinateurs portables",
+        id: 18,
+        titre: "Dell XPS 15 9520 Core i7-12700H 32 Go 1 To RTX 3050",
+        description: "Station de travail haut de gamme pour graphistes et développeurs. Écran 3.5K OLED tactile magnifique, 32 Go RAM DDR5, SSD NVMe 1 To, batterie en très bonne santé. Chargeur 130W Type-C d'origine.",
+        categorie: "Computers & IT",
         ville: "Tanger",
-        prix: 11200,
-        etat: "Bon état",
-        statut: "Vendu",
+        prix: 11900,
+        etat: "good",
+        statut: "available",
         photos: [
-            "https://images.unsplash.com/photo-1593642632823-8f785ba67e45?w=500&auto=format&fit=crop&q=80"
+            "../backend/uploads/img_6ac4df64b0d899.75438926.png"
         ],
-        date: "2026-03-15"
+        date: "2026-10-08"
     },
     {
-        id: 5,
-        titre: "iPad Air 5 (Puce M1 / 64 Go Wi-Fi) + Apple Pencil 2",
-        description: "iPad Air couleur Bleu ciel avec stylet Apple Pencil 2ème génération et étui smart folio magnétique. Écran retina intact.",
-        categorie: "Tablettes",
+        id: 19,
+        titre: "iPad Air 5 M1 64 Go Wi-Fi Bleu + Apple Pencil 2",
+        description: "iPad Air 5ème génération avec puce M1. Écran Liquid Retina impeccable, stylet Apple Pencil 2 d'origine et étui magnétique Smart Folio. Idéal pour études, dessin ou prise de note.",
+        categorie: "Smartphones & Tablets",
         ville: "Agadir",
-        prix: 5400,
-        etat: "Comme neuf",
-        statut: "Disponible",
+        prix: 5600,
+        etat: "like_new",
+        statut: "available",
         photos: [
-            "https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=500&auto=format&fit=crop&q=80"
+            "../backend/uploads/img_6ac4e5408091e5.18087206.png"
         ],
-        date: "2026-04-02"
+        date: "2026-10-08"
     },
     {
-        id: 6,
-        titre: "Écran Gaming ASUS TUF 27\" VG27AQ (2K 165Hz IPS 1ms)",
-        description: "Moniteur gamer QHD 2560x1440, dalle IPS ultra réactive, compatible G-Sync/FreeSync, pied ergonomique ajustable et pivotant. Aucun pixel mort.",
-        categorie: "Écrans & Moniteurs",
+        id: 20,
+        titre: "Appareil Photo Sony Alpha 7 III (A7 III) Boîtier Nu",
+        description: "Boîtier photo hybride plein format 24.2 MP, parfait pour vidéo 4K et photographie de portrait/paysage. 18 400 déclenchements, capteur très propre, livré avec 2 batteries et chargeur double.",
+        categorie: "Cameras & Creator Gear",
         ville: "Fès",
-        prix: 2400,
-        etat: "Très bon état",
-        statut: "Disponible",
+        prix: 10500,
+        etat: "good",
+        statut: "available",
         photos: [
-            "https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?w=500&auto=format&fit=crop&q=80"
+            "../backend/uploads/img_6ac4e55f22fcd8.03311833.png"
         ],
-        date: "2026-03-22"
+        date: "2026-10-08"
     },
     {
-        id: 7,
+        id: 21,
+        titre: "Écran PC Gamer ASUS TUF Gaming 27\" WQHD 165Hz",
+        description: "Moniteur gaming 27 pouces 2560x1440 dalle IPS, temps de réponse 1ms, compatibilité G-Sync et HDR10. Pied ergonomique ajustable en hauteur et rotation portrait. Aucun pixel mort.",
+        categorie: "Computers & IT",
+        ville: "El Jadida",
+        prix: 2400,
+        etat: "good",
+        statut: "available",
+        photos: [
+            "../backend/uploads/img_6ac4e56e914e11.49311293.png"
+        ],
+        date: "2026-10-08"
+    },
+    {
+        id: 22,
         titre: "Casque Sans Fil Sony WH-1000XM4 Réduction de Bruit",
-        description: "Casque Bluetooth circum-aural avec réduction active de bruit référence. Coussinets changés à neuf, livré avec étui rigide et câble jack.",
-        categorie: "Audio & Hi-Fi",
+        description: "Casque arceau Bluetooth avec la meilleure réduction active du bruit du marché. Coussinets confortables changés à neuf, autonomie 30h. Livré avec étui de transport rigide, adaptateur avion et câble jack.",
+        categorie: "TV & Audio",
         ville: "Ifrane",
         prix: 1750,
-        etat: "Bon état",
-        statut: "Disponible",
+        etat: "good",
+        statut: "available",
         photos: [
-            "https://images.unsplash.com/photo-1583394838336-acd977736f90?w=500&auto=format&fit=crop&q=80"
+            "../backend/uploads/img_6ac4e5763075f7.26194256.png"
         ],
-        date: "2026-03-18"
+        date: "2026-10-08"
     },
     {
-        id: 8,
+        id: 23,
         titre: "Samsung Galaxy S23 Ultra 512 Go Vert Fantôme",
-        description: "Flagship avec S-Pen intégré, capteur photo 200MP et zoom x100. État esthétique et fonctionnel irréprochable avec boîte et câble d'origine.",
-        categorie: "Smartphones",
-        ville: "El Jadida",
-        prix: 7900,
-        etat: "Comme neuf",
-        statut: "Vendu",
+        description: "Smartphone premium avec stylet S-Pen intégré, capteur photo 200 Mpx et zoom optique x100. État esthétique irréprochable avec boîte d'origine, câble USB-C et deux coques offertes.",
+        categorie: "Smartphones & Tablets",
+        ville: "Casablanca",
+        prix: 7800,
+        etat: "like_new",
+        statut: "sold",
         photos: [
-            "https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?w=500&auto=format&fit=crop&q=80"
+            "../backend/uploads/img_6ac4e57d319087.47889508.png"
         ],
-        date: "2026-03-25"
+        date: "2026-10-08"
+    },
+    {
+        id: 24,
+        titre: "Serveur NAS Synology DS220+ avec 2x 4 To WD Red Plus",
+        description: "NAS 2 baies parfait pour sauvegarde réseau, stockage photo familial et serveur multimédia Plex. Livré avec 8 To de stockage total (disques WD Red NAS en santé parfaite 100% SMART).",
+        categorie: "Edge Computing & Mini-Data/NAS",
+        ville: "Rabat",
+        prix: 3900,
+        etat: "good",
+        statut: "available",
+        photos: [
+            "../backend/uploads/img_6ac4e583298dd8.25534753.png"
+        ],
+        date: "2026-10-08"
     }
 ];
 
-// Global window exposure for compatibility
 window.CATEGORIES = CATEGORIES;
 window.VILLES = VILLES;
 window.ANNONCES = ANNONCES;

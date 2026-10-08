@@ -586,11 +586,16 @@
 
                 // Fetch single annonce from backend
                 const response = await fetch(`${API_URL}?id=${id}`);
-                const result = await response.json();
+                let result = null;
+                try {
+                    result = await response.json();
+                } catch (parseErr) {
+                    result = null;
+                }
 
                 loadingState.classList.add('hidden');
 
-                if (!response.ok || !result.success || !result.data) {
+                if (!response.ok || !result || !result.success || !result.data) {
                     notFoundState.classList.remove('hidden');
                     return;
                 }
@@ -643,6 +648,8 @@
                         opt.textContent = item.categorie;
                         catSelect.appendChild(opt);
                     });
+                } else {
+                    catSelect.innerHTML = '<option value="">Aucune catégorie disponible</option>';
                 }
 
                 if (villeData.success && Array.isArray(villeData.data)) {
@@ -653,6 +660,8 @@
                         opt.textContent = item.ville;
                         villeSelect.appendChild(opt);
                     });
+                } else {
+                    villeSelect.innerHTML = '<option value="">Aucune ville disponible</option>';
                 }
             } catch (err) {
                 console.error("Erreur chargement dropdowns:", err);
@@ -879,10 +888,18 @@
                         body: formData
                     });
 
-                    const result = await response.json();
+                    let result = null;
+                    try {
+                        result = await response.json();
+                    } catch (parseErr) {
+                        result = null;
+                    }
 
-                    if (!response.ok || !result.success) {
-                        throw new Error(result.error || result.detail || 'Erreur lors de la modification');
+                    if (!response.ok || !result || !result.success) {
+                        const errMsg = (result && (result.error || result.detail))
+                            ? (result.error || result.detail)
+                            : `Erreur serveur (${response.status} ${response.statusText})`;
+                        throw new Error(errMsg);
                     }
 
                     showToast("Annonce mise à jour avec succès dans MySQL et le miroir JSON !");

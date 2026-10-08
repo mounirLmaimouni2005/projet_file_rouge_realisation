@@ -1,21 +1,5 @@
 [
     {
-        "id_annonce": 25,
-        "titre": "TELE...............................................................",
-        "description": "TELE IN TANGER FOR BY ......................................",
-        "prix": "4000.39",
-        "etat": "fair",
-        "statut": "available",
-        "photo": "uploads/img_6ac7a1c368bd04.73620813.png",
-        "date_publication": "2026-10-08 14:59:31",
-        "date_modification": "2026-10-08 15:00:17",
-        "id_utilisateur": 1,
-        "id_categorie": 4,
-        "id_ville": 4,
-        "categorie": "TV & Audio",
-        "ville": "Tanger"
-    },
-    {
         "id_annonce": 15,
         "titre": "Apple MacBook Pro 14\" M2 Pro (16 Go / 512 Go SSD)",
         "description": "MacBook Pro 14 pouces gris sidéral en parfait état cosmétique et fonctionnel. Santé de la batterie 95%, vendu avec chargeur d'origine 67W, câble MagSafe et boîte. Jamais réparé, acheté à la Fnac.",
@@ -158,5 +142,21 @@
         "id_ville": 1,
         "categorie": "Smartphones & Tablets",
         "ville": "Casablanca"
+    },
+    {
+        "id_annonce": 24,
+        "titre": "Serveur NAS Synology DS220+ avec 2x 4 To WD Red Plus",
+        "description": "NAS 2 baies parfait pour sauvegarde réseau, stockage photo familial et serveur multimédia Plex. Livré avec 8 To de stockage total (disques WD Red NAS en santé parfaite 100% SMART).",
+        "prix": "3900.00",
+        "etat": "good",
+        "statut": "available",
+        "photo": "uploads/img_6ac4e583298dd8.25534753.png",
+        "date_publication": "2026-10-08 14:54:15",
+        "date_modification": null,
+        "id_utilisateur": 1,
+        "id_categorie": 12,
+        "id_ville": 2,
+        "categorie": "Edge Computing & Mini-Data/NAS",
+        "ville": "Rabat"
     }
 ]

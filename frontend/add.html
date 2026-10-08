@@ -527,6 +527,7 @@
             try {
                 // Fetch categories
                 const catRes = await fetch(`${API_URL}?action=categories`);
+                if (!catRes.ok) throw new Error("Erreur de récupération des catégories.");
                 const catData = await catRes.json();
                 if (catData.success && Array.isArray(catData.data)) {
                     catSelect.innerHTML = '<option value="">-- Choisir une catégorie --</option>';
@@ -536,10 +537,13 @@
                         opt.textContent = item.categorie;
                         catSelect.appendChild(opt);
                     });
+                } else {
+                    catSelect.innerHTML = '<option value="">Aucune catégorie disponible</option>';
                 }
 
                 // Fetch villes
                 const villeRes = await fetch(`${API_URL}?action=villes`);
+                if (!villeRes.ok) throw new Error("Erreur de récupération des villes.");
                 const villeData = await villeRes.json();
                 if (villeData.success && Array.isArray(villeData.data)) {
                     villeSelect.innerHTML = '<option value="">-- Choisir une ville --</option>';
@@ -549,9 +553,15 @@
                         opt.textContent = item.ville;
                         villeSelect.appendChild(opt);
                     });
+                } else {
+                    villeSelect.innerHTML = '<option value="">Aucune ville disponible</option>';
                 }
             } catch (err) {
                 console.error("Erreur chargement dropdowns API:", err);
+                const globalErr = document.getElementById('global-error');
+                const globalMsg = document.getElementById('global-error-msg');
+                if (globalMsg) globalMsg.textContent = "Impossible de charger les listes (catégories/villes) depuis le serveur.";
+                if (globalErr) globalErr.classList.remove('hidden');
             }
         }
 
@@ -776,10 +786,18 @@
                         body: formData
                     });
 
-                    const result = await response.json();
+                    let result = null;
+                    try {
+                        result = await response.json();
+                    } catch (parseErr) {
+                        result = null;
+                    }
 
-                    if (!response.ok || !result.success) {
-                        throw new Error(result.error || result.detail || 'Erreur lors de la création');
+                    if (!response.ok || !result || !result.success) {
+                        const errMsg = (result && (result.error || result.detail)) 
+                            ? (result.error || result.detail) 
+                            : `Erreur serveur (${response.status} ${response.statusText})`;
+                        throw new Error(errMsg);
                     }
 
                     showToast("Annonce enregistrée dans la base et le fichier JSON !");
