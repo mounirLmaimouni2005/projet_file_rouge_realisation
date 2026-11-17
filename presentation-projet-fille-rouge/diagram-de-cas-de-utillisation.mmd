@@ -1,0 +1,39 @@
+flowchart LR
+    Visiteur("Visiteur / Acheteur")
+    Vendeur
+    Administrateur
+
+    subgraph "TechSwap Morocco"
+      ConsulterAnnonces("Consulter les annonces")
+      FiltrerAnnonces("Filtrer par catégorie, ville et prix")
+      ConsulterDetails("Consulter les détails d'une annonce")
+      ContacterVendeur("Contacter le vendeur via WhatsApp")
+
+      CreerAnnonce("Créer une annonce")
+      ConsulterAnnoncesVendeur("Consulter les annonces")
+      ModifierAnnonce("Modifier une annonce")
+      SupprimerAnnonce("Supprimer une annonce")
+      ChangerStatut("Changer le statut disponible / vendu")
+
+      ModererAnnonces("Modérer les annonces")
+      GererUtilisateurs("Gérer les utilisateurs")
+
+      SInscrire("S'inscrire")
+      SeConnecter("Se connecter")
+    end
+
+    Visiteur --> ConsulterAnnonces
+    Visiteur --> FiltrerAnnonces
+    Visiteur --> ConsulterDetails
+    Visiteur --> ContacterVendeur
+
+    Vendeur --> SInscrire
+    Vendeur --> SeConnecter
+    Vendeur --> CreerAnnonce
+    Vendeur --> ConsulterAnnoncesVendeur
+    Vendeur --> ModifierAnnonce
+    Vendeur --> SupprimerAnnonce
+    Vendeur --> ChangerStatut
+
+    Administrateur --> ModererAnnonces
+    Administrateur --> GererUtilisateurs

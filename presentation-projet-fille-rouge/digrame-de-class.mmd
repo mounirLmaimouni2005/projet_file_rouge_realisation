@@ -1,0 +1,28 @@
+classDiagram
+direction TB
+
+class Utilisateur {
+  +int id_utilisateur
+}
+
+class Annonce {
+  +int id_annonce
+  +string titre
+  +text description
+  +decimal prix
+  +string etat
+  +string statut
+  +string photo
+}
+
+class Categorie {
+  +int id_categorie
+}
+
+class Ville {
+  +int id_ville
+}
+
+Utilisateur "1" --> "0..*" Annonce : publie
+Categorie "1" --> "0..*" Annonce : classe
+Ville "1" --> "0..*" Annonce : localise
