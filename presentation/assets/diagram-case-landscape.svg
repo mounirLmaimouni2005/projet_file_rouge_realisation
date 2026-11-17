@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="560" viewBox="0 0 1280 560" role="img" aria-labelledby="title description">
+  <title id="title">Diagramme de cas d'utilisation</title>
+  <desc id="description">Les cas d'utilisation sont reliés aux profils visiteur, vendeur et administrateur.</desc>
+  <rect width="1280" height="560" fill="#2d2d2d"/>
+
+  <g fill="none" stroke="#777777" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M152 136 H184 V64 H238 V136 H250"/>
+    <path d="M152 136 H184 V76 H453 V136 H465"/>
+    <path d="M152 136 H184 V88 H688 V136 H700"/>
+    <path d="M152 136 H184 V100 H933 V136 H945"/>
+
+    <path d="M152 303 H184 V210 H238 V303 H250"/>
+    <path d="M152 303 H184 V220 H372 V303 H384"/>
+    <path d="M152 303 H184 V230 H506 V303 H518"/>
+    <path d="M152 303 H184 V240 H640 V303 H652"/>
+    <path d="M152 303 H184 V250 H774 V303 H786"/>
+    <path d="M152 303 H184 V260 H908 V303 H920"/>
+    <path d="M152 303 H184 V270 H1042 V303 H1054"/>
+
+    <path d="M152 463 H184 V390 H288 V463 H300"/>
+    <path d="M152 463 H184 V410 H558 V463 H570"/>
+  </g>
+
+  <g font-family="Aptos, Segoe UI, sans-serif" font-size="12" font-weight="600" text-anchor="middle">
+    <g fill="#715600">
+      <rect x="24" y="117" width="128" height="38" rx="14"/>
+      <rect x="24" y="284" width="128" height="38" rx="14"/>
+      <rect x="24" y="444" width="128" height="38" rx="14"/>
+    </g>
+    <g fill="#f3d75b">
+      <text x="88" y="140">Visiteur / Acheteur</text>
+      <text x="88" y="307">Vendeur</text>
+      <text x="88" y="467">Administrateur</text>
+    </g>
+  </g>
+
+  <g fill="#705600">
+    <rect x="250" y="116" width="190" height="40" rx="12"/>
+    <rect x="465" y="116" width="210" height="40" rx="12"/>
+    <rect x="700" y="116" width="220" height="40" rx="12"/>
+    <rect x="945" y="116" width="270" height="40" rx="12"/>
+
+    <rect x="250" y="284" width="126" height="38" rx="11"/>
+    <rect x="384" y="284" width="126" height="38" rx="11"/>
+    <rect x="518" y="284" width="126" height="38" rx="11"/>
+    <rect x="652" y="284" width="126" height="38" rx="11"/>
+    <rect x="786" y="284" width="126" height="38" rx="11"/>
+    <rect x="920" y="284" width="126" height="38" rx="11"/>
+    <rect x="1054" y="280" width="188" height="46" rx="13"/>
+
+    <rect x="300" y="442" width="188" height="42" rx="12"/>
+    <rect x="570" y="442" width="212" height="42" rx="12"/>
+  </g>
+
+  <g fill="#f3d75b" font-family="Aptos, Segoe UI, sans-serif" text-anchor="middle">
+    <g font-size="12.5">
+      <text x="345" y="140">Consulter les annonces</text>
+      <text x="570" y="132"><tspan x="570">Filtrer par catégorie,</tspan><tspan x="570" dy="14">ville et prix</tspan></text>
+      <text x="810" y="132"><tspan x="810">Consulter les détails</tspan><tspan x="810" dy="14">d'une annonce</tspan></text>
+      <text x="1080" y="132"><tspan x="1080">Contacter le vendeur</tspan><tspan x="1080" dy="14">via WhatsApp</tspan></text>
+    </g>
+    <g font-size="11">
+      <text x="313" y="307">S'inscrire</text>
+      <text x="447" y="307">Se connecter</text>
+      <text x="581" y="307">Créer une annonce</text>
+      <text x="715" y="307">Consulter les annonces</text>
+      <text x="849" y="307">Modifier une annonce</text>
+      <text x="983" y="307">Supprimer une annonce</text>
+      <text x="1148" y="299"><tspan x="1148">Changer le statut</tspan><tspan x="1148" dy="14">disponible / vendu</tspan></text>
+    </g>
+    <g font-size="12.5">
+      <text x="394" y="467">Modérer les annonces</text>
+      <text x="676" y="467">Gérer les utilisateurs</text>
+    </g>
+  </g>
+</svg>
